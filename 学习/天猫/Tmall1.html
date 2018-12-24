@@ -1,0 +1,913 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>天猫商场</title>
+<style>
+	a{text-decoration:none;
+	}
+	ul{
+		list-style-type: none;
+	}
+	/* 第一行*/
+	.firstrow1{ width:1900px;
+				height:33px;
+				position:relative;
+				background-color: #CCC;
+				margin:0px;
+				padding:0px;
+				
+		}
+	.firstrow2{ position:absolute;
+		width:1600px;
+		height:28px;
+		background-color: #CCC;
+		left:75px;
+		color:#999;
+		text-align:center;
+		margin-top:5px;
+		}
+
+	.firstrow1 a{
+				text-decoration:none;
+				 color:#999;
+	}
+	.top{ width:1900px;
+		 height:130px;
+	  	position:relative;
+		}
+	.imgtmall{ width:290px; 
+			height:130px;
+			 position:absolute;
+			 margin-left:200px;
+			 text-align:center;
+			 }
+	/*天猫图片*/
+	.searchbar{ width:590px;
+		 height:106px;
+		 	 position:absolute;
+			 margin-left:600px;
+			 padding-top:30px;
+			 
+			 }
+	/*搜索栏*/
+	.MenuBar{width:1900px;
+	 	height:36px;
+	  	position:relative;
+	  }
+
+
+/***************************************/
+	.menu-bar{
+		position: relative;
+		width: 750px;
+		height: 36px;
+		margin-left: 420px;
+	}
+	.menu-bar > ul {
+		width: 800px;
+		height: 36px;
+		position: absolute;
+		margin-top: 2px;
+		text-indent: 1em;
+		text-align: center;
+	}
+	.menu-bar > ul > li{ 
+		float: left;
+	 }
+	.img-ico{
+		width: 100px;
+		height: 30px;
+	}
+	
+	
+
+	/*类目*/
+	.category-type{
+		padding-bottom: 15px;
+		width: 200px;
+		height: 22px;
+		background: red;
+		font-size: 16px;
+		color: #fff;
+		
+	}
+
+	.name-type{
+		display: block;
+		line-height: 29px;
+		margin-left: 40px;
+	}
+	/**	容器*/
+	.container{
+		width: 200px;
+		height: 538px;
+		background: #CCC;
+		background:rgba(0,0,0,0.5);
+		margin-left: 250px;
+		margin-top: -35px;
+	}
+
+	.container ul, container li{
+		list-style: none;
+        margin: 0;
+        padding: 0;
+       /* float: left;*/
+	}
+
+	/**
+		设置二级菜单，并设置隐藏 **/
+	.container > ul > li > ul {
+		width: 800px;
+		height: 470px;
+		background:white;
+        position: absolute;
+        display: none;
+    }
+
+    /** 设置二级菜单，鼠标经过设置显示**/
+    .container> ul > li:hover ul {
+        display: block;
+        height: 500px;
+        width: 800px;
+        margin-left: 200px;
+        top:210px;
+    }
+	.name-nav{
+		height: 31px;
+		width: 200px;
+		display: block;
+		line-height: 30px;
+		text-indent: 2em;
+		color: white;
+
+	}
+	.name-nav:hover{
+		background: #fff;
+		color: black;
+	}
+	.container > ul > li > ul > li{
+		float: left;
+		margin-left: 200px;
+		margin-top: 0px;
+	}
+	/*活动*/
+	.activity{
+		position: relative;
+		width: 1900px;
+		height: 425px;
+	}
+	.head{
+		position: absolute;
+		width: 485px;
+		height: 55px;
+		background: white;
+		margin-left: 250px;
+		margin-top: 40px;
+	}
+	.head img{
+		width: 485px;
+		height: 316px;
+		margin-top: 55px;
+	}
+
+	.head1{
+		position: absolute;
+		width: 485px;
+		height: 55px;
+		background: white;
+		margin-left: 800px;
+		margin-top: 40px;
+	}
+	.head1 img{
+		width: 485px;
+		height: 316px;
+		margin-top: 55px;
+	}
+	.Famous-product{
+		position: absolute;
+		font-size: 20px;
+ 		margin-left: 10px;
+		margin-top: 10px;
+	}
+	/**banner 轮播图*/
+	.banner-warp{
+		position: absolute;
+		width: 1900px;
+		height: 512px;
+		overflow: hidden;
+		z-index: -1;
+		top: 210px;
+		background: Lavender;
+	}
+	#box-bottom{
+		position: absolute;
+		left: 787px;
+		top: 430px;
+		opacity: 1;
+	}
+	#box-bottom li{
+		width: 50px;
+		height: 7px;
+		margin: 0 5px;
+		float: left;
+		display: inline-block;
+		background: #fff;
+		border-radius: 1px;
+		text-align: center;
+	}
+	#picture{
+		position: absolute;
+		z-index: 9;
+
+		width: calc(982px * 3);
+		
+
+	}
+	#picture img{
+	  width: 982px;
+	  height: 500px;
+	  float: left;
+	  margin-left: 200px;
+	  }
+	  .play{
+		animation: an 30s ease-out infinite alternate;
+	}
+	/*0%-100%动画 0%到25% 表示当动画播放到25%就完成*/
+	/*@keyframes an {
+		0%,25% {        margin-left: 0px;       }
+		30%,50% {       margin-left: -980px;    }
+		55%,75% {       margin-left: -1764px;    }
+		80%,100% {       margin-left: -2100px;    }
+		｝*/
+
+
+
+	.brand{
+			position: relative;
+			width: 988px;
+			height: 328px;
+			padding-left: 250px;
+		}
+	.box{
+		 position:relative;
+		  width:100%; height:100%;
+		   float:left;
+	}
+	.brand-img{
+			width: 123px;
+			height:109px;
+			float: left;
+		}
+	.d2{ 
+			position:absolute;
+		 	width:123px; 
+		 	height:109px;
+		  	background-color:rgba(0,1,1,0.5);
+		  	 opacity:0;
+		  	 float: left;
+		}
+	.d2:hover{ 
+			opacity:1;
+		}
+	.txt{ 
+			position:absolute;
+	  		font-size:14px; 
+	  		color:white; 
+	  		text-align:center;
+	  		 margin-left:38%; 
+	  		  top:30px;
+		}
+	.txt1{
+			 position:absolute;
+			 display:inline; 
+			 font-size:14px;
+			  padding:0 6px;
+			   background-color:red;
+			     color:white; 
+			     margin-left:19%; 
+			     margin-right:25%; 
+			     margin-top:60px;
+			     border-radius:10px;
+			 }
+
+		@keyframes an {
+		0% {        margin-left: 0px;       }
+		50% {       margin-left: -982px;    }
+		75% {       margin-left: -982px;    }
+		100% {       margin-left: -982px;    }
+		｝
+
+
+		/*图片广告*/
+
+
+</style>
+</head>
+
+<body>
+<div class="firstrow1">
+<div class="firstrow2">喵, 欢迎来天猫
+<a href="#">请登入</a>
+<a href="#">免费注册</a>
+<a href="#" style=" margin-left:800px;">我的淘宝</a>
+<a href="#">购物车</a>
+<a href="#">收藏夹</a>
+<a href="#">手机版</a>
+<a href="#">淘宝网</a>
+<a href="#">商家支持</a>
+<a href="#"></a>
+</div>
+</div>
+<div class="top">
+<div class="imgtmall">
+<img src="./img/1.png" width="249px" height="130px" />
+</div>
+<div class="searchbar">
+<input type="text"  style="width:456px; height:35px; "/>
+<button type="submit" style="width:122px; height:36px;background-color:#F00; font-size:18px; color:#FFF; font-weight:bold;">搜索</button>
+<p style="line-height:2px;letter-spacing:2px; ">
+<a href="#">针织衫</a>|
+<a href="#">连衣裙</a>|
+<a href="#">四件套</a>|
+<a href="#">摄像头</a>|
+<a href="#">客厅灯</a>|
+<a href="#">口红</a>
+</p>
+</div>
+</div>
+
+		
+	</div>
+</div>
+	
+</div>
+	<div class="menu-bar" >
+		<ul>
+			<li>
+				<a href="#" "email me"><img class="img-ico" src="./img/TB1ztBlaMMPMeJjy1XbXXcwxVXa-200-60.png" alt=""></a>
+			</li>
+			<li>
+				<a href="#" "email me"><img class="img-ico" src="./img/TB1t5ObaBxRMKJjy0FdXXaifFXa-200-60.png" alt=""></a>
+			</li>
+			<li>
+				<a href="#">天猫会员</a>
+			</li>
+			<li>
+				<a href="#">电器城</a>
+			</li>
+			<li>
+				<a href="#">喵鲜生</a>
+			</li>
+			<li>
+				<a href="#">医药馆</a>
+			</li>
+			<li>
+				<a href="#">营业厅</a>
+			</li>
+			<li>
+				<a href="#">魅力惠</a>
+			</li>
+			<li>
+				<a href="#">飞猪旅行</a>
+			</li>
+		</ul>
+	</div>
+
+	<!--导航栏-->
+	<div class="container">
+		<img src="" alt="">
+		<div class="category-type">
+			<span class="name-type">商品分类</span>
+			<hr>
+		</div>
+		<ul>
+			<li> 
+				<div class="name-nav">女装/内衣</div>
+				<img src="./img/17.png" alt="">
+				<ul>
+					<p>当季流行><p>
+					<li>
+						<a href="#">女装同款</a>
+					</li>
+					<li>
+						<a href="#">商场同款</a>
+					</li>
+					<li>
+						<a href="#">仙女连衣裙</a>
+					</li>
+					<li>
+						<a href="#">女装同款</a>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<div class="name-nav"><img src="./img/10.png" alt="">男装/户外运动</div>
+				<ul>
+					<p>当季流行></p>
+					<li>
+						<a href="#">256225</a>
+					</li>
+					<li>
+						<a href="#">23526</a>
+					</li>
+					<li>
+						<a href="#">女装同款</a>
+					</li>
+					<li>
+						<a href="#">女装同款</a>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<div class="name-nav"><img src="./img/10.png" alt="">女鞋/男鞋/箱包</div>
+				<ul>
+					<p>当季流行></p>
+					<li>
+						<a href="#">女装同款</a>
+					</li>
+					<li>
+						<a href="#">235252</a>
+					</li>
+					<li>
+						<a href="#">女252525装同款</a>
+					</li>
+					<li>
+						<a href="#">女装同款</a>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<div class="name-nav"><img src="./img/10.png" alt="">美妆/个人护理</div>
+				<ul>
+					<span>当季流行></span>
+					<li>
+						<a>234</a>
+					</li>
+					<li>
+						<a>女装5542同款</a>
+					</li>
+					<li>
+						<a>女装同款</a>
+					</li>
+					<li>
+						<a>女装同款</a>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<div class="name-nav"><img src="./img/10.png" alt="">腕表/眼镜/珠宝饰品</div>
+				<ul>
+					<span>当季流行></span>
+					<li>
+						<a>686876</a>
+					</li>
+					<li>
+						<a>8987</a>
+					</li>
+					<li>
+						<a>789789</a>
+					</li>
+					<li>
+						<a>女装同款</a>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<div class="name-nav"><img src="./img/10.png" alt="">手机/数码、电脑办公</div>
+				<ul>
+					<span>当季流行></span>
+					<li>
+						<a>888888</a>
+					</li>
+					<li>
+						<a>888888</a>
+					</li>
+					<li>
+						<a>女装同款</a>
+					</li>
+					<li>
+						<a>女装同款</a>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<div class="name-nav"><img src="./img/10.png" alt="">母婴玩具</div>
+				<ul>
+					<span>当季流行></span>
+					<li>
+						<a>女装同款</a>
+					</li>
+					<li>
+						<a>66666</a>
+					</li>
+					<li>
+						<a>666666</a>
+					</li>
+					<li>
+						<a>女装同款</a>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<div class="name-nav"><img src="./img/10.png" alt="">零食/茶酒、进口食品</div>
+				<ul>
+					<span>当季流行></span>
+					<li>
+						<a>女装同款</a>
+					</li>
+					<li>
+						<a>00000</a>
+					</li>
+					<li>
+						<a>00000</a>
+					</li>
+					<li>
+						<a>女装同款</a>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<div class="name-nav"><img src="./img/10.png" alt="">生鲜水果</div>
+				<ul>
+					<span>当季流行></span>
+					<li>
+						<a>女装同款</a>
+					</li>
+					<li>
+						<a>1111111</a>
+					</li>
+					<li>
+						<a>女装同款</a>
+					</li>
+					<li>
+						<a>女装同款</a>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<div class="name-nav"><img src="./img/10.png" alt="">大家电/生活电器</div>
+				<ul>
+					<span>当季流行></span>
+					<li>
+						<a>女装同款</a>
+					</li>
+					<li>
+						<a>99999</a>
+					</li>
+					<li>
+						<a>女装同款</a>
+					</li>
+					<li>
+						<a>女装同款</a>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<div class="name-nav"><img src="./img/10.png" alt="">家具建材</div>
+				<ul>
+					<span>当季流行></span>
+					<li>
+						<a>7777</a>
+					</li>
+					<li>
+						<a>33333</a>
+					</li>
+					<li>
+						<a>女装同款</a>
+					</li>
+					<li>
+						<a>女装同款</a>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<div class="name-nav"><img src="./img/10.png" alt="">汽车/配件/用品</div>
+				<ul>
+					<span>当季流行></span>
+					<li>
+						<a>555</a>
+					</li>
+					<li>
+						<a>5444</a>
+					</li>
+					<li>
+						<a>女装同款</a>
+					</li>
+					<li>
+						<a>女装同款</a>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<div class="name-nav"><img src="./img/10.png" alt="">家纺/家饰/鲜花</div>
+				<ul>
+					<span>当季流行></span>
+					<li>
+						<a>7</a>
+					</li>
+					<li>
+						<a>4</a>
+					</li>
+					<li>
+						<a>女装同款</a>
+					</li>
+					<li>
+						<a>女装同款</a>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<div class="name-nav"><img src="./img/10.png" alt="">医药保健</div>
+				<ul>
+					<span>当季流行></span>
+					<li>
+						<a>4</a>
+					</li>
+					<li>
+						<a>6</a>
+					</li>
+					<li>
+						<a>女装同款</a>
+					</li>
+					<li>
+						<a>女装同款</a>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<div class="name-nav"><img src="./img/10.png" alt="">厨具/收纳/宠物</div>
+				<ul>
+					<span>当季流行></span>
+					<li>
+						<a>1</a>
+					</li>
+					<li>
+						<a>3</a>
+					</li>
+					<li>
+						<a>4</a>
+					</li>
+					<li>
+						<a>5</a>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<div class="name-nav"><img src="./img/10.png" alt="">图书音像</div>
+				<ul>
+					<span>当季流行></span>
+					<li>
+						<a>女装同款</a>
+					</li>
+					<li>
+						<a>女装同款</a>
+					</li>
+					<li>
+						<a>女装同款</a>
+					</li>
+					<li>
+						<a>女装同款</a>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+	<!-- 轮播图-->
+	<div class="banner-warp">
+		<div id="picture" class="play">
+			<img class="banner-img" src="./img/TB1D4..xiQnBKNjSZFmSuwApVXa.jpg" alt="">
+			<img class="banner-img" src="./img/TB1D4..xiQnBKNjSZFmSuwApVXa.jpg" alt="">
+			<img class="banner-img" src="./img/TB1D4..xiQnBKNjSZFmSuwApVXa.jpg" alt="">
+		</div>
+		<div id="box-bottom">
+			<ul>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="activity">
+		<div class="head">
+				<p class="Famous-product">聚名品&nbsp&nbsp LUXURY &nbsp CHANNEL
+					&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+
+					 <a href="" title="">更多></a>
+						</p>
+				<a href="" title=""><img src="./img/R@55M2BH%`HX@83W]8Q8$84.png" alt=""></a>
+		</div>
+		<div class="head1">
+				<p class="Famous-product">品牌活动 &nbsp&nbsp BRAND &nbsp ACTIVITY 
+					&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp	
+					 <a href="" title="">更多></a>
+					</p>
+				<a href="" title=""><img src="./img/ZZEY9(J6@D26$C(){TF%AU0.png" alt=""></a>
+		</div>
+		
+		</div>
+		</div>
+
+	<div class="brand">
+		<div class="box">
+			
+		
+		<div class="brand-img">
+							<div class="d2">
+							<div class="txt">T</div>
+							<div class="txt1">点击进入</div>
+							</div>
+							<a href="" title=""><img src="./img/)JL0GRKI[`D(1`H243[8`KJ.png" alt=""></a>
+							
+		</div>
+		<div class="brand-img">
+							<div class="d2">
+							<div class="txt">...</div>
+							<div class="txt1">点击进入</div>
+							</div>
+							<a href="" title=""><img src="./img/_8L@J9NF@43_SDU2Y8ZQ3X9.png" alt=""></a>
+							
+		</div>
+		<div class="brand-img">
+							<div class="d2">
+							<div class="txt">...</div>
+							<div class="txt1">点击进入</div>
+							</div>
+							<a href="" title=""><img src="./img/AWETRL42LO77HDQ[ART1C2S.png" alt=""></a>
+														
+							
+		</div>
+		<div class="brand-img">
+							<div class="d2">
+							<div class="txt">...</div>
+							<div class="txt1">点击进入</div>
+							</div>
+							<a href="" title=""><img src="./img/E{{IGFRSU683LXK1CR[DAW8.png" alt=""></a>
+							
+		</div>
+		<div class="brand-img">
+							<div class="d2">
+							<div class="txt">...</div>
+							<div class="txt1">点击进入</div>
+							</div>
+							<a href="" title=""><img src="./img/DTI2I3`~US6TOP~}SOW4I{L.png" alt=""></a>
+							
+		</div>
+		<div class="brand-img">
+							<div class="d2">
+							<div class="txt">...</div>
+							<div class="txt1">点击进入</div>
+							</div>
+							<a href="" title=""><img src="./img/P[Y{O_R$URFD]U[HR{L66(Q.png" alt=""></a>
+							
+		</div>
+		<div class="brand-img">
+							<div class="d2">
+							<div class="txt">...</div>
+							<div class="txt1">点击进入</div>
+							</div>
+							<a href="" title=""><img src="./img/6MQ[0G0ZZY75HM`JE7DT)AG.png" alt=""></a>
+							
+		</div>
+		<div class="brand-img">
+							<div class="d2">
+							<div class="txt">...</div>
+							<div class="txt1">点击进入</div>
+							</div>
+							<a href="" title=""><img src="./img/RO06FA(MN%_ZWD[WPM%}R`I.png" alt=""></a>
+							
+		</div>
+		<div class="brand-img">
+							<div class="d2">
+							<div class="txt">...</div>
+							<div class="txt1">点击进入</div>
+							</div>
+							<a href="" title=""><img src="./img/)JL0GRKI[`D(1`H243[8`KJ.png" alt=""></a>
+							
+		</div>
+		<div class="brand-img">
+							<div class="d2">
+							<div class="txt">...</div>
+							<div class="txt1">点击进入</div>
+							</div>
+							<a href="" title=""><img src="./img/_8L@J9NF@43_SDU2Y8ZQ3X9.png" alt=""></a>
+							
+		</div>
+		<div class="brand-img">
+							<div class="d2">
+							<div class="txt">...</div>
+							<div class="txt1">点击进入</div>
+							</div>
+							<a href="" title=""><img src="./img/AWETRL42LO77HDQ[ART1C2S.png" alt=""></a>
+														
+							
+		</div>
+		<div class="brand-img">
+							<div class="d2">
+							<div class="txt">...</div>
+							<div class="txt1">点击进入</div>
+							</div>
+							<a href="" title=""><img src="./img/E{{IGFRSU683LXK1CR[DAW8.png" alt=""></a>
+							
+		</div>
+		<div class="brand-img">
+							<div class="d2">
+							<div class="txt">...</div>
+							<div class="txt1">点击进入</div>
+							</div>
+							<a href="" title=""><img src="./img/DTI2I3`~US6TOP~}SOW4I{L.png" alt=""></a>
+							
+		</div>
+		<div class="brand-img">
+							<div class="d2">
+							<div class="txt">...</div>
+							<div class="txt1">点击进入</div>
+							</div>
+							<a href="" title=""><img src="./img/P[Y{O_R$URFD]U[HR{L66(Q.png" alt=""></a>
+							
+		</div>
+		<div class="brand-img">
+							<div class="d2">
+							<div class="txt">...</div>
+							<div class="txt1">点击进入</div>
+							</div>
+							<a href="" title=""><img src="./img/6MQ[0G0ZZY75HM`JE7DT)AG.png" alt=""></a>
+							
+		</div>
+		<div class="brand-img">
+							<div class="d2">
+							<div class="txt">...</div>
+							<div class="txt1">点击进入</div>
+							</div>
+							<a href="" title=""><img src="./img/RO06FA(MN%_ZWD[WPM%}R`I.png" alt=""></a>
+
+		</div>
+		<div class="brand-img">
+							<div class="d2">
+							<div class="txt">T</div>
+							<div class="txt1">点击进入</div>
+							</div>
+							<a href="" title=""><img src="./img/)JL0GRKI[`D(1`H243[8`KJ.png" alt=""></a>
+							
+		</div>
+		<div class="brand-img">
+							<div class="d2">
+							<div class="txt">...</div>
+							<div class="txt1">点击进入</div>
+							</div>
+							<a href="" title=""><img src="./img/_8L@J9NF@43_SDU2Y8ZQ3X9.png" alt=""></a>
+							
+		</div>
+		<div class="brand-img">
+							<div class="d2">
+							<div class="txt">...</div>
+							<div class="txt1">点击进入</div>
+							</div>
+							<a href="" title=""><img src="./img/AWETRL42LO77HDQ[ART1C2S.png" alt=""></a>
+														
+							
+		</div>
+		<div class="brand-img">
+							<div class="d2">
+							<div class="txt">...</div>
+							<div class="txt1">点击进入</div>
+							</div>
+							<a href="" title=""><img src="./img/E{{IGFRSU683LXK1CR[DAW8.png" alt=""></a>
+							
+		</div>
+		<div class="brand-img">
+							<div class="d2">
+							<div class="txt">...</div>
+							<div class="txt1">点击进入</div>
+							</div>
+							<a href="" title=""><img src="./img/DTI2I3`~US6TOP~}SOW4I{L.png" alt=""></a>
+							
+		</div>
+		<div class="brand-img">
+							<div class="d2">
+							<div class="txt">...</div>
+							<div class="txt1">点击进入</div>
+							</div>
+							<a href="" title=""><img src="./img/P[Y{O_R$URFD]U[HR{L66(Q.png" alt=""></a>
+							
+		</div>
+		<div class="brand-img">
+							<div class="d2">
+							<div class="txt">...</div>
+							<div class="txt1">点击进入</div>
+							</div>
+							<a href="" title=""><img src="./img/6MQ[0G0ZZY75HM`JE7DT)AG.png" alt=""></a>
+							
+		</div>
+		<div class="brand-img">
+							<div class="d2">
+							<div class="txt">...</div>
+							<div class="txt1">点击进入</div>
+							</div>
+							<a href="" title=""><img src="./img/RO06FA(MN%_ZWD[WPM%}R`I.png" alt=""></a>
+
+		</div>
+		</div>
+</body>
+</html>

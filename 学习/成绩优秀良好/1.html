@@ -1,0 +1,33 @@
+<!DOCTYPE <html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<script language="javascript">
+function btnScore(){
+var s=document.getElementById("textScore").value;
+if(s==""){//判断输入不为空
+alert("请输入成绩");
+}else if(isNaN(s)){//判断输入格式是否有效
+alert("请输入数字成绩");
+}else{
+var Score=Number(s);
+if(Score<0){
+alert("哥们。。你要努力了。。连零分都不到。。");
+}else if(Score>=0 && Score<60){//60分以下不及格
+alert("不及格");
+}else if(Score>=60 && Score <85){//60分至85分及格
+alert("及格");
+}else if(Score>=85 && Score<=100){//85分至100分优秀
+alert("优秀");
+}else if(Score>100){//满分溢出
+alert("哇塞，难道阁下已经到达超越满分100分的境界？");
+}
+}
+}
+</script>
+	<body>
+		<input type="text" id="textScore" />
+		<input type ="button" value="Test" onclick="btnScore();" />
+	</body>
+</html>

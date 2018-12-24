@@ -1,0 +1,102 @@
+.box{
+	width: 100%;
+}
+*{
+	margin: 0;
+	padding: 0;
+}
+a{
+	text-decoration: none;
+}
+.friendship-link{
+	width: 100%;
+	height: 60px;
+
+}
+.friendship-link a{
+	color: #989898;
+	margin-left: 92%;
+	line-height: 60px;
+	font-size: 14px;
+}
+.header{
+	width: 1078px;
+	height: 32px;
+	margin: 0 auto;
+}
+.header-logo{
+	width: 178px;
+	height: 32px;
+	float: left;
+
+}
+.header-logo img{
+	width: 150px;
+	height:32px;
+	text-align: center;
+}
+.header-text{
+	width: 100px;
+	height: 32px;
+	border-left: 1px solid #BABAC9;
+	float: left;
+	color: #BABAC9;
+	padding: 0;
+	margin: 0;
+}
+.header-text p{
+	text-align: center;
+	font-size: 13px
+	
+}
+.navigation{
+	width: 796px;
+	height: 32px;
+	float: left;
+	text-align: center;
+	line-height: 32px;
+	word-spacing: 20px;
+	font-size: 18px;
+	
+}
+.navigation a{
+	color: #666666;
+}
+.navigation a:hover{
+	color: #00C8FB;
+}
+.site-navigation{
+	width: 100%;
+	height: 100px;
+	background: #00B8F9;
+	margin: 0 auto;
+	margin-top: 20px;
+	
+}
+.site-navigation-h3{
+	width: 478px;
+	height: 60px;
+	margin: 0 auto;
+	border: 1px solid #BABAC9;
+	line-height: 30px;
+	color: #FFFFFF;
+	padding: 20px;
+	float: left;
+}
+.share{
+	width: 600px;
+	height: 100px;
+	border: 1px solid #BABAC9;
+	color: #FFFFFF;
+	line-height: 100px;
+	float: left;
+	text-align: center;
+}
+.share-img{
+	width: 600px;
+	height: 40px;
+	border: 1px solid #BABAC9;
+	color: #FFFFFF;
+	line-height: 107px;
+	margin: 0 auto;
+}
