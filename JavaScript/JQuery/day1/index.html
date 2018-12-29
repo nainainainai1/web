@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+</head>
+<body>
+	<input class="test" type="text" name="" value="">
+	<input type="button" name="" value="确定" onclick="getValue()">
+	<br>
+	<input type="text" name="aa" class="aa"  onclick="doClick()"/>
+
+</body>
+<script language="javascript">
+	
+	function getValue(){
+		let name =document.getElementById("name").value;
+		console.log("name:"+name);
+
+	}
+	function doClick(){
+	
+		var element = $("input[name='aa']").val();
+		console.log(element);
+	}
+</script>
+<script src="jquery-3.3.1.min.js"></script>
+</html>
