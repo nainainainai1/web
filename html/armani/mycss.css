@@ -1,0 +1,212 @@
+
+.box{
+	width: 100%;
+	height: auto;
+}
+*{
+	padding: 0;
+	margin: 0;
+}
+a{
+	text-decoration: none;	
+}
+.top{
+	width: 98%;
+	height: 27px;
+	background-color: #F2F2F2;
+}
+.top-navigation{
+	width: 1190px;
+	height: 27px;
+	margin: 0 auto;
+	word-spacing:15px;
+}
+.top-navigation a{
+	color: #999999;
+	font-size: 12px;
+}
+.top-navigation a:hover{
+	text-decoration:underline;
+	color: red;
+}
+.top-right{
+	margin-left: 450px;
+
+}
+.top-central-sections{
+	width: 98%;
+	height: 100px;
+	border-bottom: 1px solid #C8BAAA;
+
+}
+.top-content{
+	width: 1190px;
+	height: 98px;
+	margin: 0 auto;
+}
+.top-content-logo{
+	width: 100px;
+	height: 65px;
+	float: left;
+
+}
+.armani{
+	width: 230px;
+	height: 38px;
+	font-size: 10px;
+	letter-spacing: -1px;
+	float: left;
+	border-left: 1px solid #F1F1F1;
+	border-right: 1px solid #F1F1F1;
+	margin-top: 17px;
+	padding-left: 10px;
+	display: block;
+	position: relative;
+}
+.armani a{
+	color: #363636;
+	
+}
+.armani a:hover{
+	text-decoration:underline;
+	color: #363636;
+}
+.armani-hover{
+	width: 374px;
+	height: 300px;
+	display: none;
+	position: absolute;
+	margin: 10px -11px;
+	border: 1px solid silver;
+	background-color: white;
+	color: #999999;
+}
+.armani:hover .armani-hover{
+	display: block;
+}
+.armani-hover-top{
+	
+	width: 350px;
+	height: 80px;
+	border-bottom: 1px solid gainsboro;
+	margin: 0 auto;
+	margin-top: 20px;
+}
+.armani-hover-content{
+	width: 350px;
+	height: 135px;
+	border-bottom: 1px solid gainsboro;
+	margin: 0 auto;
+	margin-top: 20px;
+}
+.brand{
+	width: 50px;
+	height: 19px;
+	font-size: 9px;
+	background-color: #FFC782;
+	border-radius: 3px;
+	
+}
+.main-info{
+	width: 120px;
+	height: 38px;
+	margin-top: 17px;
+	padding-left: 10px;
+	border-right: 1px solid #F1F1F1;
+	float: left;
+	word-spacing: 2px;
+	font-size: 12px;
+	color: #989898;
+}
+.main-info p{
+	letter-spacing: 5px;
+}
+.main-info span{
+	color: red;
+	
+	font-size: 11px;
+}
+.shopwt{
+	width: 75px;
+	height: 38px;
+	margin-top: 17px;
+	margin-left: 10px;
+	float: left;
+	font-size: 12px;
+	color: #989898;
+}
+.search{
+	width: 410px;
+	height: 30px;
+	margin-top: 17px;
+	margin-left: 75px;
+	float: left;
+	border: 3px solid red;
+	border-right: none;
+}
+.search-box{
+	width: 300px;
+}
+.search-txt{
+	width: 330px;
+	height: 26px;
+	color: #666666;
+	border: 0;
+	padding: 2px;
+}
+.search-btn{
+	width: 70px;
+	height: 36px;
+	background-color: red;
+	color: #FFFFFF;
+	font-size: 16px;
+	line-height: 36px;
+	margin-top: 17px;
+	float: left;
+	text-align: center;
+	cursor: pointer;
+}
+.search-btn2{
+	width: 70px;
+	height: 36px;
+	background-color: #363636;
+	font-size: 16px;
+	line-height: 36px;
+	margin-top: 17px;
+	color: #FFFFFF;
+	border: 0;
+	margin-left: 2px;
+	cursor: pointer;
+}
+.new-year{
+	width: 98%;
+	height: 45px;
+	background-color: #FC0F3D;
+}
+.new-year2 {
+	width: 1000px;
+	height: 45px;
+	margin: 0 auto;
+}
+.jhi-img{
+	width: 996px;
+	height: 114px;
+	margin: 0 auto;
+	border-bottom: 1px solid #1E1E1E;
+}
+.navigation{
+	width: 1024px;
+	height: 36px;
+	margin: 0 auto;
+}
+.rotation-chart{
+	width: 98%;
+	height: 650px;
+	overflow:hidden; 
+	position: absolute;
+}
+.rotation-chart img{
+	width: 100%;
+	height: 650px;
+	display: block;
+}
