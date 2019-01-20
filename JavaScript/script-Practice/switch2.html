@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>switch</title>
+	<link rel="stylesheet" href="">
+</head>
+<body>
+	<p>如果今天不是周六或周日，则会输出默认的消息：</p>
+	<button type="button" onclick="mybtn()" > 提交</button>
+	<p id="myp"></p>
+</body>
+<script type="text/javascript">
+	function mybtn()
+	{
+		var x;
+		var d= new Date().getDay();
+		switch (d)
+		{
+			case 6:
+			x="today it's saturday";
+			break;
+			case 0:
+			x="today it's sunday";
+			break;
+			default:
+			x="Looking forward to the Weekend";
+		}
+		document.getElementById("myp").innerHTML=x;
+	}
+</script>
+</html>

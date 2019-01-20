@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>if else</title>
+	<link rel="stylesheet" href="">
+</head>
+<body>
+	<p>如果时间小于18：00，获得Good day</p>
+	<p>如果时间大于18：00，获得Good evening</p>
+	<button type="button" onclick="mybtn()">提交</button>
+	<p id="myp"></p>
+</body>
+<script type="text/javascript">
+	function mybtn()
+	{
+		var x="";
+		var time=new Date().getHours();
+		if (time<18)
+		{
+			x="Good day";
+		}
+		else
+		{
+			x="Good evening";
+		}
+		document.getElementById("myp").innerHTML=x;
+	}
+</script>
+</html>

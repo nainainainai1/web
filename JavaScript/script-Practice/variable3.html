@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>变量</title>
+	<link rel="stylesheet" href="">
+</head>
+<body>
+	<span>假设y=8,计算 x=y+4,并显示结果</span>
+	<button type="button" onclick="mybtn()">提交</button>
+	<p id="myp"></p>
+</body>
+<script type="text/javascript">
+	function mybtn()
+	{
+		var y=8;
+		var x=y+4;
+		var mypp=document.getElementById("myp")
+		mypp.innerHTML="x=" +x;
+	}
+</script>
+</html>
