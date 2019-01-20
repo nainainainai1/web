@@ -1,0 +1,36 @@
+<!DOCTYPE <html>
+<head>
+	<meta charset="utf-8">
+	<title>成绩</title>
+</head>
+<script language="javascript">
+	function Score(){
+		let s=document.getElementById("txtScore").value;
+		console.log("值："+s)
+		if(s === undefined || s===""){
+			alert("请输入成绩");
+		}else if(isNaN(s)){
+			alert("请输入数字成绩");
+		}else{
+			let mscore=Number(s);
+			if (mscore <= 0) {
+				alert("你居然连零分都不到！");
+			}else if(mscore>=0 && mscore<59){
+				alert("不及格");
+			}else if (mscore>=60 && mscore<69) {
+				alert("及格");
+			}else if (mscore>=70 && mscore<89) {
+				alert("良好");
+			}else if (mscore>=90 && mscore<=100) {
+				alert("优秀");
+			}
+
+		}
+	}
+</script>
+<body>
+	<input type="text" id="txtScore">
+	<input type="button" value="提交" onclick="Score();">
+</body>
+
+</html>
