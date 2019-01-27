@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>for</title>
+	<link rel="stylesheet" href="">
+</head>
+<body>
+	<p>点击下面的按钮，将代码循环五次</p>
+	<button type="button" onclick="mybtn()">点击</button>
+	<p id="myp"></p>
+</body>
+<script type="text/javascript">
+		function mybtn()
+		{
+			var x="";
+			for (var i=0;i<5;i++)
+			{
+				x=x+"the number is"+i+"<br>";
+
+			}
+			document.getElementById("myp").innerHTML=x;
+		}
+	</script>
+</html>

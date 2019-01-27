@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>for</title>
+	<link rel="stylesheet" href="">
+</head>
+<body>
+	<p>循坏遍历对象“person”属性</p>
+	<button type="button" onclick="mybtn()" >提交</button>
+	<p id="myp"></p>
+</body>
+	<script type="text/javascript">
+		function mybtn()
+		{
+			var x;
+			var txt="";
+			var person={fname:"bill",lname:"gates",age:56};
+			for (x in person)
+			{
+				txt=txt + person[x];
+			}
+			document.getElementById("myp").innerHTML=txt;
+		}
+	</script>
+</html>
