@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>dom 事件</title>
+	<link rel="stylesheet" href="">
+</head>
+<body>
+	<p>请输入英文字符：</p><input type="text" id="input" onclick="mytxt()">
+	<p>当离开输入框时，会将输入文本转换为大写字母</p>
+</body>
+	<script type="text/javascript">
+		function mytxt()
+		{
+			var x=document.getElementById("input");
+			x.value=x.value.toUpperCase();
+		}
+	</script>
+
+</html>

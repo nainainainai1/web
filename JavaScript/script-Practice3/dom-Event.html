@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>dom 事件</title>
+	<link rel="stylesheet" href="">
+</head>
+<body>
+	<p>点击按钮执行displaydate函数</p>
+	<button onclick="mybtn()">点击</button>
+	<p id="myp"></p>
+</body>
+	<script type="text/javascript">
+		function mybtn(){
+			document.getElementById("myp").innerHTML=Date();
+		}
+
+	</script>
+</html>
