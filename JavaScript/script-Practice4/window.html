@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>window</title>
+	<link rel="stylesheet" href="">
+</head>
+<body>
+	<p id="myp"></p>
+</body>
+<script type="text/javascript">
+	var w=window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+	var h=window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+	x=document.getElementById("myp");
+	x.innerHTML="浏览器的内部宽度："+ w + ",高度：" + h;
+</script>
+</html>
