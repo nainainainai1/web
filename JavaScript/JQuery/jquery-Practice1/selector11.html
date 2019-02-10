@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>选择器</title>
+	<link rel="stylesheet" href="">
+	<script src="jquery-3.3.1.min.js"></script>
+</head>
+<body>
+	<p>标题</p>
+	<p>段落1</p>
+	<p>段落2</p>
+	<p><a href="http://www.w3cschool.cn/html/" title="">HTML 教程</a></p>
+	<p><a href="http://www.w3cschool.cn/css/" title="">CSS 教程</a></p>
+	<button>点我</button>
+</body>
+<script>
+	$(document).ready(function(){
+  $("button").click(function(){
+    $("[href]").hide();
+  });
+});
+</script>
+
+</html>
