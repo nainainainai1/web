@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>事件</title>
+	<link rel="stylesheet" href="">
+	<script src="jquery-3.3.1.min.js"></script>
+</head>
+<body>
+	Name:<input type="text" name="fullname" value=""><br>
+	Email:<input type="text" name="email" value="">
+</body>
+<script type="text/javascript">
+	$(document).ready(function()
+	{
+		$("input").focus(function()
+		{
+			$(this).css("background-color","#cccccc");
+		});
+		$("input").blur(function()
+		{
+			$(this).css("background-color","#ffffff")
+		});
+	});
+	/*当元素获得焦点时，发生 focus 事件*/
+	/*当元素失去焦点时，发生 blur 事件。*/
+</script>
+</html>

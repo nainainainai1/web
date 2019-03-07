@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>事件</title>
+	<link rel="stylesheet" href="">
+	<script src="jquery-3.3.1.min.js"></script>
+</head>
+<body>
+	<p id="myp">你碰我试试！</p>
+</body>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#myp").mouseenter(function(){
+			alert("你鼠标碰到我了！")
+		})
+	})
+	/*当鼠标指针穿过元素时，会发生 mouseenter 事件*/
+</script>
+</html>

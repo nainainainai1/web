@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>事件</title>
+	<link rel="stylesheet" href="">
+	<script src="jquery-3.3.1.min.js"></script>
+</head>
+<body>
+	<p id="myp">我！</p>
+</body>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#myp").mousedown(function(){
+			alert("你鼠标按到我了！")
+		})
+	})
+	/*当鼠标指针移动到元素上方，并按下鼠标按键时，会发生 mousedown 事件。*/
+</script>
+</html>

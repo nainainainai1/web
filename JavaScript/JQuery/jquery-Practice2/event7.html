@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>事件</title>
+	<link rel="stylesheet" href="">
+	<script src="jquery-3.3.1.min.js"></script>
+</head>
+<body>
+	<p id="myp">你看到了我！</p>
+</body>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#myp").hover(function(){
+			alert("好了！你现在看不见我了！")
+		})
+	})
+	/*hover()方法用于模拟光标悬停事件。*/
+</script>
+</html>
