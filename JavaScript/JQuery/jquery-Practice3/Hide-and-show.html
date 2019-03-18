@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>隐藏和显示</title>
+	<link rel="stylesheet" href="">
+	<script src="jquery-3.3.1.min.js"></script>
+</head>
+<body>
+	<input id="myinput" type="text" name="" value="">
+	<p>点隐藏！我就会消失</p>
+	<button class="hide">隐藏</button>
+	<button class="show">显示</button>
+</body>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(".hide").click(function(){
+			$("p").hide();
+		})
+		$(".show").click(function(){
+			$("p").show();
+		})
+	})
+</script>
+</html>
