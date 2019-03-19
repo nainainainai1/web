@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>滑动</title>
+	<link rel="stylesheet" href="">
+	<script src="jquery-3.3.1.min.js"></script>
+	<style>
+		#div2,#div1{
+			padding: 5px;
+			text-align: center;
+			background-color: red;
+			border: solid 1px #c3c3c3;
+		}
+		#div2{
+			padding: 50px;
+			display: block;
+		}
+	</style>
+</head>
+<body>
+	<div id="div1">点我拉起/下拉面版</div>
+	<div id="div2">hello world</div>
+</body>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#div1").click(function(){
+			$("#div2").slideToggle("slow");
+		});
+	});
+</script>
+</html>
