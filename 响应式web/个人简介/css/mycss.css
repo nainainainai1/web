@@ -39,17 +39,17 @@
 	width: 65%;
 	height: 1000px;
 	float: left;
-	background-color: #A9A9A9;
+	/* background-color: #A9A9A9; */
 
 }
 .title{
 	width: 95%;
-	height: 50px;
+	height: 60px;
 	background-color: #000000;
 	margin: 0 auto;
 	color: #FFFFFF;
 	text-align: center;
-	margin-top: 10px;
+	
 }
 .Introduction{
 	width: 95%;
@@ -73,7 +73,7 @@
 	height: 80px;
 	background-color: #000000;
 	margin: 0 auto;
-	margin-top: 15px;
+	margin-top: 20px;
 	text-align: center;
 	line-height: 80px;
 }
