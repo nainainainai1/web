@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>设置</title>
+	<link rel="stylesheet" href="">
+	<script src="jquery-3.3.1.min.js"></script>
+	
+</head>
+<body>
+	<button id="btn1">设置</button>
+	<button id="btn2">设置html</button>
+	<button id="btn3">设置值</button>
+	<p id="myp1">这是一个段落</p>
+	<p id="myp2">这是另外一段落</p>
+	<p>输入框：<input type="text" id="myp3" value="w3cschool教程"></p>
+</body>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#btn1").click(function(){
+			$("#myp1").text("hello world!");
+		});
+		$("#btn2").click(function(){
+			$("#myp2").text("<b>hello world!</b>");
+		});
+		$("#btn3").click(function(){
+			$("#myp3").val("w3cschool");
+		});
+	});
+</script>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>方法</title>
+	<link rel="stylesheet" href="">
+	<script src="jquery-3.3.1.min.js"></script>
+	
+</head>
+<body>
+	<p>名称：<input type="text" id="test" value="w3cshool教程"></p>
+	<button>显示值</button>
+</body>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("button").click(function(){
+			alert("值为:"+$("#test").val());
+		});
+	});
+</script>
+</html>
