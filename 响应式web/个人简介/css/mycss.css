@@ -42,11 +42,24 @@
 	/* background-color: #A9A9A9; */
 
 }
+.navigation-bar{
+	width: 45%;
+	padding-left: 50%;
+	background-color: #000000;
+	margin: 0 auto;
+	color: #FFFFFF;
+	text-align: center;
+}
+.navigation-bar a{
+	color: #ffffff;
+	text-decoration: none;
+}
 .title{
 	width: 95%;
 	height: 60px;
 	background-color: #000000;
 	margin: 0 auto;
+	margin-top: 10px;
 	color: #FFFFFF;
 	text-align: center;
 	
