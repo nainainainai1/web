@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>CSS方法</title>
+	<link rel="stylesheet" href="">
+	<script src="jquery-3.3.1.min.js"></script>
+	<style type="text/css" media="screen">
+	
+	</style>
+</head>
+<body>
+	<p style="background-color: #ff0000">111</p>
+	<p style="background-color: #00ff00">222</p>
+	<p style="background-color: #0000ff">333</p>
+	<button>返回p的background-color</button>
+</body>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("button").click(function(){
+			alert("背景颜色="+$("p").css("background-color"));
+		});
+	});
+</script>
+</html>

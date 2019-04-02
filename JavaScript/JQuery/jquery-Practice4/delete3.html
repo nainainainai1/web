@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>删除元素</title>
+	<link rel="stylesheet" href="">
+	<script src="jquery-3.3.1.min.js"></script>
+	
+</head>
+<body>
+	<div id="mydiv" style="width: 200px; height: 200px;background-color: red;">
+		<p class="myp">111</p>
+		<p class="myp">222</p>
+		<p>333</p>
+	</div>
+	<button>删除所有"myp" 的元素</button>
+	
+</body>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("button").click(function(){
+			$("p").remove(".myp");
+		});
+	});
+</script>
+</html>

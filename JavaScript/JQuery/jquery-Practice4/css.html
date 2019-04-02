@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>CSS类</title>
+	<link rel="stylesheet" href="">
+	<script src="jquery-3.3.1.min.js"></script>
+	<style type="text/css" media="screen">
+		.important{
+			font-weight: bold;
+			font-size: xx-large;
+		}
+		.blue{
+			color: blue;
+		}
+	</style>
+</head>
+<body>
+	<h1>1</h1>
+	<h2>2</h2>
+	<p>3</p>
+	<p>4</p>
+	<div>5</div>
+	<button>添加CSS</button>
+</body>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("button").click(function(){
+			$("h1,h2,p").addClass("blue");
+			$("div").addClass("important");
+		});
+	});
+</script>
+</html>
