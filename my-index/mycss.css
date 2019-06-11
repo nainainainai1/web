@@ -1,0 +1,100 @@
+*{
+	padding: 0;
+	margin: 0;
+}
+.box{
+	width: 100%;
+}
+.top{
+	width: 100%;
+	height: 120px;
+	margin: 0 auto;
+	background: #F7F7F9;
+
+}
+.top-title{
+	width: 550px;
+	height: 120px;
+	float: left;
+	line-height: 120px;
+	color: #00B4B7;
+	padding-left: 8%;
+}
+.top-navigation{
+	width: 550px;
+	height: 120px;
+	line-height: 120px;
+	float: left;
+	color: #363636;
+	word-spacing: 20px;
+}
+.top-navigation a{
+	text-decoration: none;
+	color: #232222;
+	font-size: 18px;
+
+
+}
+.top-navigation a:hover{
+	width: 60px;
+	height: 50px;
+	border-radius: 35%;
+	background: #00B4B7;
+	color: #FAF8F8;
+}
+.case{
+	width: 100%;
+	height: 550px;
+	background: #D3E1E1;
+}
+.case img{
+	width: 100%;
+	height: 100%;
+}
+.content{
+	width: 100%;
+	height: 1568px;
+	background: #E7ECEC;
+
+}
+.service{
+	width: 1200px;
+	height: 293px;
+	margin: 10px auto;
+	background: #519697;
+}
+.dynamic{
+	width: 1200px;
+	height: 658px;
+	font-size: 24px;
+	margin: 20px auto;
+	background: #4A6D6E;
+	padding-top: 20px;
+	text-align: center;
+}
+.dynamic-dox{
+	width: 1200px;
+	height: 518px;
+	margin: 20px auto;
+}
+.dynamic-img{
+	width: 288px;
+	height: 198px;
+	float: left;
+	margin-left: 10px;
+	margin-top: 20px;
+	background: #74E4A8;
+
+}
+.about{
+	width: 1200px;
+	height: 557px;
+	margin: 20px auto;
+	background: #AEE0C5;
+}
+.bottom{
+	width: 100%;
+	height: 92px;
+	background: #3D3D3D;
+	margin-top: 20px;
+}
