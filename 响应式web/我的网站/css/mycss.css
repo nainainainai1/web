@@ -1,0 +1,170 @@
+*{
+	padding: 0;
+	margin: 0;
+}
+/* 头部导航开始 */
+.nav{
+	width: 900px;
+	height: 60px;
+	margin: 0 auto;
+}
+.top-logo{
+	width: 80px;
+	float: left;
+	height: 60px;
+}
+.top-nav{
+	width: 500px;
+	height: 60px;
+	float: left;
+	list-style: none;
+	padding-top: 13px;
+	margin-left: 50px;
+}
+.top-nav li{
+	width: 80px;
+	height: 30px;
+	float: left;
+	text-align: center;
+	line-height: 30px;
+	border-radius: 50px;
+}
+.top-nav li:hover{
+	width: 80px;
+	height: 30px;
+	background: #6FBBB5;
+	cursor: pointer;
+}
+.top-nav a{
+	color: #34716D;
+	text-decoration: none;
+}
+.top-search{
+	width: 250px;
+	float: left;
+	padding-top: 13px;
+}
+.top-search button{
+	width: 40px;
+	height: 30px;
+	background: #6FBBB5;
+	text-align: center;
+}
+.top-search input{
+	width: 200px;
+	height: 30px;
+	border: 1px solid #6FBBB5; 
+}
+/* 头部导航结束 */
+
+/*时间*/
+.time-visitor{
+	width:1000px; 
+	height: 50px;
+	margin: 0 auto;
+	color: #A5ABAA;
+	font-size: 25px;
+}
+/* 时间结束 */
+
+
+/*轮播图开始*/
+.box{
+	width: 600px;
+	height: 600px;
+	border: 1px solid #ccc;
+    margin: 0 auto;
+    padding: 5px;
+
+}
+.inner{
+ 	width: 600px;
+	height: 600px;
+    position: relative;
+    overflow: hidden;
+}
+.inner img{
+    width: 600px;
+    height: 600px;
+    vertical-align: top
+}
+.inner ul {
+    width: 1000%;
+    position: absolute;
+    list-style: none;
+    left:0;
+    top: 0;
+        }
+.inner li{
+    float: left;
+
+}
+
+.inner ol {
+	position: absolute;
+    height: 20px;
+    right: 20px;
+    bottom: 20px;
+    text-align: center;
+    padding: 5px;
+        }
+.inner ol li{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    background-color: #fff;
+    margin: 5px;
+    cursor: pointer;
+
+        }
+.inner ol .current{
+         background-color: red;
+        }
+#arr{
+      display: none;
+}
+#arr span{
+	width: 40px;
+    height: 40px;
+    position: absolute;
+    left: 5px;
+    top: 50%;
+    margin-top: -20px;
+    background: #fff;
+    cursor: pointer;
+    line-height: 40px;
+    text-align: center;
+    font-weight: bold;
+    font-family: '黑体';
+    font-size: 30px;
+    color: #000;
+    opacity: 0.5;
+    border: 1px solid #fff;
+        }
+#arr #right {
+    right: 5px;
+    left: auto;
+/*轮播图结束*/
+
+}
+
+
+.canvas{
+	width: 1000px;
+	height: 500px;
+	margin: 80px auto;
+}
+
+
+.video{
+	width: 700px;
+	height: 700px;
+	margin: 0 auto;
+}
+
+.video video{
+	width: 100%;
+	height: 100%;
+	margin-top: 100px;
+}

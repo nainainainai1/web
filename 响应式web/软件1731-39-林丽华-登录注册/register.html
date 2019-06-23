@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>注册</title>
+	<link rel="stylesheet" href="css/register.css">
+</head>
+<body>
+	<div>
+		<img alt="" class="tree" src="./img/B612Kaji_20190322_165745_518.jpg" >
+		<form class="content" action="#" method="post" name="content">
+			<ul>
+				<li class="usually">
+					<h2>用户注册</h2>
+				</li>
+				<li class="usually">
+					<span>姓名：</span>
+					<input type="text" name="name" id="name" required />
+				</li>
+				<li class="usually">
+					<span>学号：</span>
+					<input type="text" name="id" required />
+				</li>
+				<li class="usually">
+					<span>班级：</span>
+					<input type="text" name="class" required />
+				</li>
+				<li class="usually">
+					<span>专业：</span>
+					<input type="text" name="major"  required />
+				</li>
+				<li class="special">
+					<span>性别：</span>
+					<input type="radio" name="sex" id="male" checked />
+					<label for="male">男</label>
+					<input type="radio" name="sex" id="female" />
+					<label for="female">女</label>
+				</li>
+				
+				<li class="usually">
+					<span>身高：</span>
+					<input type="text" name="height" required />
+				</li>
+				<li class="usually">
+					<span>体重：</span>
+					<input type="text" name="weight" required />
+				</li>
+				<li class="usually">
+					<span>联系方式：</span>
+					<input type="text" name="telephone" required />
+				</li>
+				<li class="usually">
+					<span>地址：</span>
+					<input type="text"  pattern="[1-9]d{5}(?!d)" name="postcode" required />
+				</li>
+				<li class="usually">
+					<span>年龄：</span>
+					<select name=""> 
+					<option value="0">17</option> 
+					<option value="1">18</option> 
+					<option value="0">19</option> 
+					<option value="1">20</option> 
+					<option value="0">21</option> 
+					<option value="1">22</option> 
+					</select> 
+				</li>
+				<li class="special">
+					<span>兴趣爱好：</span>
+					<input type="checkbox" id="football" name="interest" required />
+					<label for="football">足球</label>
+					<input type="checkbox" id="basketball" name="interest" required />
+					<label for="basktball">篮球</label>
+					<input type="checkbox" id="swim" name="interest" required />
+					<label for="swim">游泳</label>
+					<input type="checkbox" id="sing" name="interest" required />
+					<label for="sing">唱歌</label>
+					<input type="checkbox" id="run" name="interest" required />
+					<label for="run">跑步</label>
+					<input type="checkbox" id="yoga" name="interest" required />
+					<label for="yoga">瑜伽</label>
+
+				</li>
+				<li class="usually">
+					<span>个人简介：</span>
+					<textarea rows="10" cols="200" name="introduction" class="message" required></textarea>
+				</li>
+				<li>
+					<button type="submit" class="submit">立即注册</button>
+				</li>
+			</ul>
+		</form>
+	</div>
+</body>
+</html>

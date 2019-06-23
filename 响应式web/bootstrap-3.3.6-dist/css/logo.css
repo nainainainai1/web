@@ -1,0 +1,156 @@
+body{
+	margin: 0;
+	padding: 0;
+
+}
+div{
+	position: absolute;
+}
+.bg{
+	width: 800px;
+	height: 600px;
+	background: #f2f2f2;
+	overflow: hidden;
+}
+.beam{
+	width: 1600px;
+	height: 20px;
+	background: #fff;
+	top: 290px;
+	left: -400px;
+}
+.d-shield1, .d-shield2, .d-shield3, .d-shield4, .d-shield5, .d-shield6, .d-shield7{
+	background: #e15016;
+}
+.d-shield1{
+	left: 32px;
+	width: 140px;
+	height: 346px;
+}
+.d-shield2{
+	transform: skewX(5deg);
+	left: 16px;
+	width: 100px;
+	height: 346px;
+}
+.d-shield3{
+	transform: skewY(15deg);
+	top: 265px;
+	left: 32px;
+	width: 140px;
+	height: 100px;
+}
+.d-shield4{
+	left: 172px;
+	width: 140px;
+	height: 346px;
+}
+.d-shield5{
+	transform: skewX(-5deg);
+	left: 227px;
+	width: 100px;
+	height: 346px;
+}
+.d-shield6{
+	transform: skewY(-15deg);
+	top: 265px;
+	left: 172px;
+	width: 140px;
+	height: 100px;
+}
+.d-shield7{
+	top: 199px;
+	left: 60px;
+	width: 80px;
+	height: 20px;
+}
+.l-shield1, .l-shield2, .l-shield3, .l-shield4{
+	background: #ee6812;
+}
+.l-shield1{
+	left: 172px;
+	width: 140px;
+	height: 346px;
+}
+.l-shield2{
+	transform: skewX(-5deg);
+	left: 227px;
+	width: 100px;
+	height: 363px;
+}
+.l-shield3{
+	transform: skewY(-15deg);
+	top: 282px;
+	left: 172px;
+	width: 138px;
+	height: 100px;
+}
+.l-shield4{
+	top: 113px;
+	left: 180px;
+	width: 100px;
+	height: 43px;
+}
+.gray1, .gray2, .gray3, .gray4{
+	background: #ebebeb;
+}
+.gray1{
+	height: 43px;
+	width: 102px;
+	left: 70px;
+	top: 70px;
+}
+.gray2{
+	transform: skewX(5deg);
+	height: 216px;
+	width: 46px;
+	left: 75px;
+	top: 70px;
+}
+
+.gray3{
+	height: 43px;
+	width: 95px;
+	left: 77px;
+	top: 156px;
+}
+.gray4{
+	transform: skewY(15deg);
+	height: 47px;
+	width: 87px;
+	left: 85px;
+	top: 251px;
+}
+.white1{
+	width: 102px;
+	height: 43px;
+	left: 172px;
+	top: 70px;
+}
+.white2{
+	transform: skewX(-5deg);
+	width: 46px;
+	height: 216px;
+	left: 223px;
+	top: 70px;
+}
+.white3{
+	width: 95px;
+	height: 43px;
+	left: 172px;
+	top: 156px;
+}
+.white4{
+	transform: skewY(-15deg);
+	width: 87px;
+	height: 47px;
+	left: 172px;
+	top: 251px;
+}
+img {
+	position: fixed;
+	top: 8px;
+	left: 225px;
+	width: 350px;
+	height: 110px;
+}
