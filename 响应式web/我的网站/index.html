@@ -17,7 +17,7 @@
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </head>
 <body>
-
+	
 	<!-- 导航开始 -->
 	<nav class="navbar navbar-inverse">
 	  <div class="container-fluid">
@@ -56,6 +56,13 @@
 	        <button type="submit" class="btn btn-default">搜索</button>
 	      </form>
 	    <!-- 搜索结束 -->
+	    <!-- 时间开始 -->
+	<div class="time-visitor">
+		<div id="time">
+	 
+		</div>
+	</div>
+	<!-- 时间结束	 -->
 	    </div><!-- /.navbar-collapse -->
 	  </div><!-- /.container-fluid -->
 	</nav>
@@ -103,13 +110,7 @@
 		</div>
 	</div>
 
-	<!-- 时间开始 -->
-	<!-- <div class="time-visitor">
-		<div id="time">
-	 
-		</div>
-	</div> -->
-	<!-- 时间结束	 -->
+	
 	
 			<!-- 画布开始 -->
 			<div class="canvas">
@@ -129,10 +130,20 @@
 			</div>
 
 
-			<div class="audio">
-				
-			</div>
+		<div id="music">
+			<div id="music-container">
+				<h1>我的音乐</h1>
+				<h3 id="musicName">歌名：房间</h3>
+				<img src="img/yy.jpg" id="musicImg">
+				<audio src="music/刘瑞琦 - 房间.mp3" controls id="audio"></audio>
+				<div class="btn">
+				<button id="play">播放</button>
+				<button id="pause">暂停</button>
+				<button id="prev">上一首</button>
+				<button id="next">下一首</button>
+		</div>
 	</div>
+</div>
 		
 	
 </body>
@@ -140,6 +151,7 @@
 <script type="text/javascript" src="js/canvas.js"></script>
 <script type="text/javascript" src="js/pic.js"></script>
 <script type="text/javascript" src="js/time.js"></script>
+<script type="text/javascript" src="js/audio.js"></script>
 <script type="text/javascript">
 	
 

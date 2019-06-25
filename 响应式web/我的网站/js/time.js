@@ -1,4 +1,4 @@
-/ 时间
+// 时间
     var add=setInterval("getTime()",1000);
     //stop()这个函数主要是清除设置的定时器
     function stop() {
