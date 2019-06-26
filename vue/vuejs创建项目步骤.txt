@@ -1,0 +1,4 @@
+1. 创建一个基于 webpack 模板的新项目: vue init webpack 项目名
+2. 切换到项目文件：cd 项目名
+3. 初始化并安装需要的插件：npm install
+4. 运行项目：npm run dev

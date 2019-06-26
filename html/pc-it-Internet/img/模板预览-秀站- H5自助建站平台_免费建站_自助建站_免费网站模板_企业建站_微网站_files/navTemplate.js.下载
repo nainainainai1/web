@@ -1,0 +1,69 @@
+$(function() {
+	var navTemplate = {};
+
+	navTemplate.init = function(){
+		$(".wqdNavTemplate1").addClass("navtranslateX").css("width",0);
+		$(".NavTemplateBtn1").attr("state","off");
+		$(".wqdView").removeClass("contTranslateX");
+		$(".wqdNavTemplate1 .navTop_list1 a").each(function(){
+			!$(this).attr("href") && $(this).attr("href","javascript:void(0);");
+		});
+		//$("#HTMLDATA").length ? this.insideInit() : this.outsideInit();
+		this.insideInit();
+	};
+
+	navTemplate.insideInit = function(){
+		var startY;
+		$(".navTop_list1").on("touchstart",function(e){
+			startY  = e.originalEvent.changedTouches[0].screenY;
+		}).on("touchmove",function(e){
+			var outerH = 0,
+				endY =  e.originalEvent.changedTouches[0].screenY - startY;
+			$(".navTop_list1 > li").each(function(){outerH += $(this).outerHeight()});
+			outerH += 90; 
+			if((endY>0 && $(this).scrollTop()<=0) ||(endY<0 && $(this).scrollTop()>=outerH-$(window).height())){
+				return false;
+			}
+				
+		});
+		$(document).on("click",".navTop_list1 li a",function(){
+			$(this).attr("categorylink")=="1" && $(".NavTemplateBtn1").trigger("click");
+		});
+		$(document).on("click",".navTop_list1>li>a",function(){
+			$(".navTop_list1 > li").not($(this).parent()).find(".navSub_list1").slideUp();
+			var ulDom = $(this).siblings("ul");
+			if(ulDom.is(":visible")) ulDom.slideUp();
+			else ulDom.slideDown();
+		});
+		$(document).on("click",".NavTemplateBtn1",function(){
+			if(navTemplate.animated) return;
+			navTemplate.animated = true;
+			var state = $(this).attr("state") || "off";
+			if(state == "on"){
+				$(this).attr("state","off");
+				$(".wqdNavTemplate1").addClass("navtranslateX");
+				$(".wqdView").removeClass("contTranslateX");
+				setTimeout(function(){
+					$(".wqdNavTemplate1").css("width",0);
+					$(".wqdView").removeClass("translate");
+					navTemplate.animated = false;
+				},550);
+			}else{
+				$(this).attr("state","on");
+				$(".wqdNavTemplate1").css("width",320).removeClass("navtranslateX");
+				$(".wqdView").eq(1).addClass("translate").addClass("contTranslateX");
+				$(".wqdView").eq(2).addClass("translate").addClass("contTranslateX");
+				setTimeout(function(){
+					navTemplate.animated = false;
+				},550);
+			}
+		});
+	}
+
+	navTemplate.outsideInit = function(){
+
+
+	}
+	navTemplate.init();
+	return navTemplate;
+});	

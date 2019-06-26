@@ -7,7 +7,7 @@
 	<link rel="stylesheet" href="">
 </head>
 <body>
-	<input class="test" type="text" name="" value="">
+	<input id="test" type="text" name="" value="">
 	<input type="button" name="" value="确定" onclick="getValue()">
 	<br>
 	<input type="text" name="aa" class="aa"  onclick="doClick()"/>
@@ -16,7 +16,7 @@
 <script language="javascript">
 	
 	function getValue(){
-		let name =document.getElementById("name").value;
+		let name =document.getElementById("test").value;
 		console.log("name:"+name);
 
 	}

@@ -1,0 +1,142 @@
+.mobile-buyCar {
+  display: none;
+  position: fixed;
+  bottom: 65px;
+  right: 18px;
+  z-index: 6; }
+  .mobile-buyCar.goods-members {
+    display: block; }
+    .mobile-buyCar.goods-members .personal-center {
+      display: block; }
+  .mobile-buyCar.goods-pay {
+    display: block; }
+    .mobile-buyCar.goods-pay .personal-more {
+      display: block; }
+  .mobile-buyCar .personal-center {
+    display: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    overflow: hidden; }
+    .mobile-buyCar .personal-center img {
+      display: block;
+      width: 100%;
+      height: 100%; }
+  .mobile-buyCar .personal-more {
+    display: none;
+    width: 30px;
+    height: 30px;
+    background: url("/images/mall/buy-more.png");
+    -webkit-background-size: 100% 100%;
+    background-size: 100% 100%;
+    position: relative;
+    cursor: pointer; }
+    .mobile-buyCar .personal-more i {
+      display: block;
+      padding: 2px;
+      border-radius: 50%;
+      font-size: 12px;
+      color: #ffffff;
+      background-color: #f44236;
+      min-width: 20px;
+      min-height: 20px;
+      position: absolute;
+      top: -7px;
+      right: -4px;
+      text-align: center;
+      line-height: 16px;
+      font-style: normal; }
+      .mobile-buyCar .personal-more i.none {
+        display: none; }
+
+.mobile-popup {
+  display: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.5);
+  top: 0; }
+  .mobile-popup a, .mobile-popup div {
+    -webkit-tap-highlight-color: transparent; }
+  .mobile-popup.on {
+    display: block; }
+  .mobile-popup .mobile-usercenter {
+    width: 320px;
+    height: 200px;
+    background: #ffffff;
+    position: absolute;
+    bottom: 0;
+    left: 0; }
+    .mobile-popup .mobile-usercenter .user-application {
+      height: 130px;
+      padding: 34px 80px;
+      font-size: 0; }
+      .mobile-popup .mobile-usercenter .user-application a {
+        display: inline-block;
+        text-align: center;
+        width: 50px; }
+      .mobile-popup .mobile-usercenter .user-application .personal-center {
+        margin-right: 60px; }
+      .mobile-popup .mobile-usercenter .user-application .personal-basket {
+        position: relative; }
+        .mobile-popup .mobile-usercenter .user-application .personal-basket i {
+          display: block;
+          padding: 2px;
+          border-radius: 50%;
+          font-size: 12px;
+          color: #ffffff;
+          background-color: #f44236;
+          min-width: 20px;
+          min-height: 20px;
+          position: absolute;
+          top: -6px;
+          right: 2px;
+          text-align: center;
+          line-height: 16px;
+          font-style: normal; }
+          .mobile-popup .mobile-usercenter .user-application .personal-basket i.none {
+            display: none; }
+      .mobile-popup .mobile-usercenter .user-application img {
+        font-size: 0;
+        display: inline-block;
+        vertical-align: middle;
+        width: 40px;
+        height: 40px;
+        margin-bottom: 7px;
+        border-radius: 50%; }
+      .mobile-popup .mobile-usercenter .user-application span {
+        display: inline-block;
+        font-size: 12px;
+        color: #7a818b; }
+    .mobile-popup .mobile-usercenter .user-closebtn {
+      width: 275px;
+      height: 70px;
+      border-top: 1px solid #f1f1f1;
+      margin: 0 auto;
+      text-align: center;
+      line-height: 70px;
+      cursor: pointer; }
+      .mobile-popup .mobile-usercenter .user-closebtn i {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        background: url("/images/mall/buy-close.png") no-repeat;
+        -webkit-background-size: 100% 100%;
+        background-size: 100% 100%; }
+
+#mini {
+  display: none;
+  width: 30px;
+  height: 30px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  position: fixed;
+  z-index: 10;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease; }
+  #mini.animate {
+    display: block; }
+
+/*# sourceMappingURL=editShopping-m.css.map */

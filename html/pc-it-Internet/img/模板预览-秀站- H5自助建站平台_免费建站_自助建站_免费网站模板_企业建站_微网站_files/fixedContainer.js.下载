@@ -1,0 +1,153 @@
+$(function() {
+	var fixedContainer = {};
+
+	fixedContainer.init = function(){
+
+		var $wqdFixedContainerWrap=$(".wqdFixedContainerWrap");
+		if($wqdFixedContainerWrap.length){
+			var $cloneWrap=$wqdFixedContainerWrap.find('.wqdFixedContainer').clone(true);
+
+			$wqdFixedContainerWrap.remove();
+
+			$('.wqdIphoneView').eq(2).append($cloneWrap);
+		}
+
+
+		$("#HTMLDATA").length ? this.insideInit() : this.outsideInit();
+	};
+
+	fixedContainer.insideInit = function(){
+		//撤销恢复检测是否需要加开关
+		$(document).on("domRecover",function(){
+			$(".wqdFixedContainerWrap").length && !$(".fixedController").length && fixedContainer.createController();
+			!$(".wqdFixedContainerWrap").length && $(".fixedController").length && $(".fixedController").remove();
+		});	
+		$(document).on("domInit",function(){
+			if($(".wqdFixedContainerWrap").length){
+				fixedContainer.createController();
+				$(".wqdFixedContainerWrap").hide();
+				$(".fixedController").addClass("fixedHide").find(".fixedText").text("显示");
+			}
+		});
+		if($(".wqdFixedContainerWrap").length){
+			this.createController();
+			$(".wqdFixedContainerWrap").hide();
+			$(".fixedController").addClass("fixedHide").find(".fixedText").text("显示");
+		}
+
+		//监听添加事件，自动生成一个关闭图形
+		$(document).on("wqdAddElement",function(event){
+			if(!$(event.target).hasClass("wqdFixedContainer")) return;
+			var that = $(event.target),
+				closeBtn = $('<div class="wqdelementEdit closeFixedContainer" data-elementtype="icon" data-elemandgroup="true" data-unused="copy,group,animate" style="width: 16px; height: 16px; left: 204px; top: 9px; z-index: 1;" data-zindex="1" wqdhref="0" wqdpathfill="#000"><div class="wqdelementEditBox"><svg class="wqd-svgicon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 200" xml:space="preserve"><path fill="#000" d="M123.9,100.2l69.6-69.6c2.9-2.9,4.5-6.7,4.5-10.8c0-4.1-1.6-7.9-4.5-10.8c-2.9-2.9-6.7-4.5-10.8-4.5c-4.1,0-7.9,1.6-10.8,4.5l-69.6,69.6L33.1,9.3c-2.9-2.9-6.7-4.5-10.8-4.5c-4.1,0-7.9,1.6-10.8,4.5c-6,6-6,15.7,0,21.7l69.2,69.2l-69.2,69.2c-2.9,2.9-4.5,6.7-4.5,10.8s1.6,7.9,4.5,10.8c2.9,2.9,6.7,4.5,10.8,4.5c4.1,0,7.9-1.6,10.8-4.5l69.2-69.2l69.2,69.2c2.9,2.9,6.7,4.5,10.8,4.5c4.1,0,7.9-1.6,10.8-4.5c2.9-2.9,4.5-6.7,4.5-10.8s-1.6-7.9-4.5-10.8L123.9,100.2z"/></svg></div></div>');
+			that.find(".wqdFixedContent").attr("data-maxzindex",1).append(closeBtn);
+			$(".wqdFixedContainerWrap").length && !$(".fixedController").length && fixedContainer.createController();
+		});
+		//打开和隐藏按钮
+		$(document).on("click",".fixedController",function(event){
+			if($(this).hasClass("fixedHide")){
+				$(".wqdFixedContainerWrap").show();
+				$(this).find(".fixedText").text("隐藏");
+			}else{
+				$(".wqdFixedContainerWrap").hide();
+				$(this).find(".fixedText").text("显示");
+			}
+			$(this).toggleClass("fixedHide");
+			$(document).trigger("appSetCatch");
+		});
+	};
+	fixedContainer.createController = function(){
+		var controller = $('<div class="fixedController"><a href="javascript:;" class="fixedIcon"></a><a href="javascript:;" class="fixedText">隐藏</a></div>'),
+			left = $("#wqdIphoneFooter").offset().left + $("#wqdIphoneFooter").width()+3,
+			top = $("#wqdIphoneFooter").offset().top-32;
+		controller.css({"left":left,"top":top});
+		$("body").append(controller);
+	}
+	fixedContainer.outsideInit = function(){
+		var jqDom = $(".wqdFixedContainer");
+		//关闭
+		jqDom.find(".closeFixedContainer").on("click",function(event){
+			event.stopPropagation();
+			$(this).parents(".wqdFixedContainer").remove();
+		});
+		jqDom.each(function(i){
+			//pc访问手机站
+			var w_width = $(window).width(),
+				w_left = $(".wqdView.wqdIphoneView").offset().left;
+			w_width > 767 && $(this).css({"zIndex":9,"left":parseInt($(this).css("left"))+w_left});
+			//实际手机上调整定位
+			var windowHeight = $(window).height(),
+				editorHeight = 506,
+				thisTop = parseInt($(this).css("top")),
+				thisHeight = $(this).height();
+			//元素中心在屏幕偏下
+			if(thisTop + thisHeight/2 > editorHeight/2){
+				var realHeight = (windowHeight/editorHeight*thisTop) - (thisHeight-windowHeight/editorHeight*thisHeight);
+				realHeight = windowHeight -thisHeight -  realHeight;
+				$(this).css({"top":"inherit","bottom":realHeight});
+			}
+			//绑定事件
+			var that = $(this),
+				showtype = that.attr("wqdshowtype") || "always",
+				categorylink = that.attr("categorylink") || "";
+			showtype == "always" && that.show();
+			if(categorylink){
+				that.on("click",function(){
+					if(categorylink == "0"){
+						//切屏模式
+						if($(".wqdAreaView[pagemodel=wqdBgFixed]").length){
+							/*var translateY = 0;
+							$(".wqdAreaView[pagemodel=wqdBgFixed]").children().each(function(){translateY -= $(this).height();});
+							translateY = $(this).attr("wqdbacktype")=="arriveTop" ? 0 : translateY+$(window).height()-$(".wqdView.wqdIphoneView").eq(0).height();
+							$(".wqdAreaView[pagemodel=wqdBgFixed]").css({
+					            '-webkit-transition':'-webkit-transform 0ms',
+					            '-webkit-transform':'translate3d(0,'+translateY+'px,0)',
+					            'transition':'transform 0ms',
+					            'transform':'translate3d(0,'+translateY+'px,0)'
+						    });*/
+							topType = $(this).attr("wqdbacktype")=="arriveTop" ? 0 : 1;
+							$(document).trigger("bgfixedJump",topType);
+						}else{
+							var scrollTop = $(this).attr("wqdbacktype")=="arriveTop" ? 0 : $(document).height()-$(window).height();
+							window.scrollTo(0,scrollTop);
+							$(this).attr("wqdbacktype")=="arriveTop" && $(".wqdFixedContainer[wqdshowtype=nofirst], .wqdFixedContainer[wqdshowtype=lastscreen]").hide();
+						}
+					}else{
+						var url = that.attr("hrefurl") || "",
+							blank = that.attr("hrefblank") || "",
+							urlall = location.protocol+"//"+location.hostname+url;
+						if(blank){
+							categorylink == "3" && (urlall = url);
+							window.open(urlall);
+						}else{
+							var index = url.indexOf("#"),
+								pathname = location.pathname;
+							if(location.pathname != url.substring(0,index) && index!=0){
+								location.href = url;
+							}else{
+								location.href = url;
+								categorylink == "1" && $(".wqdAreaView[pagemodel=wqdBgFixed]").length && location.reload();
+							}
+						}
+					}
+				});
+			}
+		});
+		//容器设了链接，屏蔽内部的a跳转
+		$(".wqdFixedContainer .wqdFixedContent a").on("click",function(e){
+			if($(this).parents(".wqdFixedContainer").attr("categorylink") != undefined) e.preventDefault();
+		});
+
+		$(window).scroll(function(){
+			if($(".wqdAreaView[pagemodel=wqdBgFixed]").length) return;
+			var scrollTop = $(window).scrollTop(), scrollHeight = $(document).height(),windowHeight = $(window).height();
+			if (scrollTop > windowHeight) $(".wqdFixedContainer[wqdshowtype=nofirst]").show();
+			else $(".wqdFixedContainer[wqdshowtype=nofirst]").hide();
+
+			if (scrollTop + windowHeight >= scrollHeight-50) $(".wqdFixedContainer[wqdshowtype=lastscreen]").show();
+			else $(".wqdFixedContainer[wqdshowtype=lastscreen]").hide();
+		});
+	};
+
+	fixedContainer.init();
+});	

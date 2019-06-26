@@ -1,0 +1,635 @@
+$(function() {
+	var commodityList = {};
+
+	commodityList.init = function(){
+		this.commonInit();
+		this.outsideEvent();
+	};
+	commodityList.commonInit = function(){
+
+		this.updataModity();	//更新数据
+
+	}
+	//发布后
+	commodityList.outsideEvent = function(){
+		// 只要切换不同分类 清除对应列表上的属性值id数组 必须放到分类查询点击事件之前 wpz
+		$(document).on("click",".wqdcommodityCategory .modityCategory a",function(){
+			if($(this).parent().hasClass('active')){
+				return;
+			}
+			var contactId = $(this).parents('.wqdcommodityCategory').attr("wqdmark") || "ssss",
+			$modityList = $(".wqdcommodityList[wqdmark="+contactId+"]");
+			$modityList.removeAttr('data-attrvalarr');
+		});
+		//浏览分类数据
+		$(document).on("click",".categoryFirst > li > .categoryChild",function(){
+			var that = $(this),
+				touchSlide = that.parents(".wqdcommodityCategory").data("touchSlide");
+			
+			that.hasClass("categoryIcon") && (that = $(this).siblings("a"));
+			if(touchSlide && touchSlide.sliding) return;
+
+			that.parent().addClass("active").siblings("li").removeClass("active").find(".categorySecond").hide().end().find(".categoryThird").hide();
+			//存在二级，展开
+			if(that.siblings(".categorySecond").length){
+				var category = that.parents(".modityCategory"),
+					wid = that.parents(".categoryFirst").outerHeight(),
+					second = that.siblings(".categorySecond"),
+					translatx = parseInt(that.parents(".categoryFirst").attr("translatx") || 0);
+
+				second.css({"top":wid-1, "left":-translatx});
+				!second.find(".categoryThird").length && second.width(320);
+
+				if(second.is(":visible")){
+					category.find(".modityMask").hide();
+					second.hide()
+
+				}else{
+					var heightVal = category.parents(".sectionV2").height() - category.parents(".wqdcommodityCategory").position().top,
+						$mask = category.find(".modityMask").length ? category.find(".modityMask") : $('<div class="modityMask"></div>').appendTo(category);
+					$mask.css("height",heightVal).show();
+
+					second.show();
+				}
+			}else{
+
+				//没有二级直接刷新数据
+				commodityList.reloadData(that);
+			}
+
+		}).on("click",".categorySecond > li > a",function(event){
+			$(this).parent().addClass("active").siblings("li").removeClass("active").find(".categoryThird").hide();
+			
+			if($(this).siblings(".categoryThird").length){
+				var third = $(this).siblings(".categoryThird");
+				third.css("top",-$(this).parent().position().top);
+				third.is(":visible") ? third.hide() : third.show();
+			}else{
+				commodityList.reloadData($(this));
+			}
+			
+		}).on("click",".categoryThird > li > a",function(){
+			commodityList.reloadData($(this));
+		});
+
+		//查看更多事件
+		$(document).on("click.loadmore",".loadMore",function(){
+			if($(this).hasClass("loaded")) return;
+
+			var loadType =  $(this).attr("loadmore-type") || "0";
+			if(loadType == "0" || loadType == "1"){
+				var link = $(this).attr("linksrc") || "";
+				if(!link) return;
+
+				link = loadType == "0" ? "//"+location.host+link : link;
+				window.open(link);
+			}else if(loadType == "3"){
+
+				commodityList.loadmore($(this),"click-count");
+			}
+		});
+
+		//滑动加载
+		$(window).on("scroll", function() {
+            var elements = $(".wqdcommodityList .loadMore[loadmore-type=2]").not(".loaded");
+            if(!elements.length) return;
+
+            var inview = elements.filter(function() {
+
+	            var $e = $(this), $w = $(window), wt = $w.scrollTop(), wb = wt + $w.height(), et = $e.offset().top, eb = et + $e.height();
+
+	            return et >= wt && eb <= wb && $e.is(":visible");
+	        });
+
+	        inview.each(function(){commodityList.loadmore($(this), "slide-count");});
+		});
+		
+		// 点击筛选按钮 wpz
+		/* var userID */
+		$(document).on('click','.wqdcommodityCategory .filtrate', function(){
+			var contactId = $(this).parents('.wqdcommodityCategory').attr("wqdmark") || "ssss",
+				USERID = $(".wqdcommodityList[wqdmark="+contactId+"]").attr("userid") || "",
+				categoryIds = $(".wqdcommodityList[wqdmark="+contactId+"]").attr("data-categoryIds") || "",
+				$curAdvObj = $("body .wqdcommodityAdvanceSearch").eq(0);
+				// $curAdvObj = $(".wqdcommodityAdvanceSearch[wqdmark="+contactId+"]");
+			
+			$curAdvObj.attr('wqdmark',contactId);
+			/* 清空内容 */
+			$curAdvObj.find('.all-cate,.one-cate').html('')
+			/* 判断当前状态是否是全部分类 */
+			var $activeLi= $(this).siblings('.categoryFirst').find('li.active')
+			if($activeLi.find('a').data('category')){
+				/* 已经选择分类 */
+				if($activeLi.length == 2){
+					if($activeLi.eq(0).find('a').data('category')==$activeLi.eq(1).find('a').data('category')){
+						/* 一级分类>全部*/
+						// console.log('一级分类>全部')
+						commodityList.advSearch('noLast',$curAdvObj,{},{
+							firstCateID:$activeLi.eq(0).find('a').data('category'),
+							name: $activeLi.eq(0).find('a.categoryChild').text(),
+							$secondLi:$activeLi.eq(0).find('.categorySecond li a')
+						});
+					} else {
+						// console.log('二级分类--末级')
+						commodityList.requestDate("/fixed/item/getItemSearchCriteria",{
+							userId:USERID,
+							categoryId:$activeLi.eq(1).find('a').data('category')
+						},function (data) {
+							if(data.status == 200) {
+								commodityList.advSearch('isLast', $curAdvObj, data.data, {name:$activeLi.eq(1).find('a').text(),id:$activeLi.eq(1).find('a').data('category')})
+							}
+						})
+					}
+				} else {
+					if($activeLi.hasClass('haveChild')){
+						/* 一级分类 */
+						// console.log('一级分类')
+						commodityList.advSearch('noLast',$curAdvObj,{},{
+							firstCateID:$activeLi.eq(0).find('a').data('category'),
+							name: $activeLi.eq(0).find('a.categoryChild').text(),
+							$secondLi:$activeLi.eq(0).find('.categorySecond li a')
+						});
+					} else {
+						/* 最后一级分类 */
+						// console.log('一级分类--末级')
+						commodityList.requestDate("/fixed/item/getItemSearchCriteria",{
+							userId:USERID,
+							categoryId:$activeLi.eq(0).find('a').data('category')
+						},function (data) {
+							if(data.status == 200) {
+								commodityList.advSearch('isLast', $curAdvObj, data.data, {name:$activeLi.eq(0).find('a.categoryChild').text(),id:$activeLi.eq(0).find('a').data('category')})
+							}
+						})
+					}
+				}
+			} else {
+				/* 全部分类 */
+				commodityList.requestDate("/fixed/item/getAllCategory",{userId:USERID},function (data) {
+					if(data.status == 200 ){
+						commodityList.advSearch('allcate',$curAdvObj,commodityList.getCatetoryDate(data.data, categoryIds));
+					}
+				})
+			}
+
+
+			
+		});
+		
+		
+		//  高级搜索点击事件 wpz
+		 	/* 点击高级搜索一级分类 */
+		$(document).on('click','.wqdcommodityAdvanceSearch .cate-name',function() {
+			if($(this).siblings('.li-switch').hasClass('ul-hide')){
+				$(this).siblings('.li-switch').removeClass('ul-hide').addClass('ul-show');
+				$(this).siblings('ul.secondCate').show();
+			}else{
+				$(this).siblings('.li-switch').removeClass('ul-show').addClass('ul-hide');
+				$(this).siblings('ul.secondCate').hide();
+			}
+			
+		});
+		// 点击高级搜索二级分类 wpz
+		$(document).on('click','.wqdcommodityAdvanceSearch .secondCate li.second', function () {
+			var that = this
+			var contactId = $(this).parents('.wqdcommodityAdvanceSearch').attr("wqdmark") || "ssss",
+				USERID = $(".wqdcommodityList[wqdmark="+contactId+"]").attr("userid") || "";
+			commodityList.requestDate("/fixed/item/getItemSearchCriteria",{
+				userId:USERID,
+				categoryId:($(that).data('cate')&&$(that).data('cate')||$(that).find('a').data('category'))
+			},function (data) {
+				if(data.status == 200) {
+					commodityList.advSearch('isLast', $(that).parents('.wqdcommodityAdvanceSearch'), data.data, {
+						name:$(that).text(),
+						id:$(that).data('cate')&&$(that).data('cate')||$(that).find('a').data('category')
+					})
+				}
+			})
+		});
+		// 选择属性值
+		$(document).on('click','.wqdcommodityAdvanceSearch .mb-item-content .attrVal', function () {
+			var that = this;
+			if($(this).hasClass('on')){
+				$(this).removeClass('on')
+			} else {
+				$(this).addClass('on')
+			}
+		});
+		// 点击确定按钮
+		$(document).on('click','.wqdcommodityAdvanceSearch .btn-box .submit', function () {
+			var that = this;
+			var attrValArr=[];
+			var contactId = $(that).parents(".wqdcommodityAdvanceSearch").attr("wqdmark") || "ssss",
+			modityDom = $(".wqdcommodityList[wqdmark="+contactId+"]"),
+			stype = modityDom.attr("sorttype") || "time",
+			USERID = modityDom.attr("userid") || "",
+			categoryid = $(that).parents('.mb-mask').find('.one-cate .cate-title').data('cateid');
+			
+			if($(that).parents('.mb-mask').find('.one-cate .attrVal.on').length){
+				$.each($(that).parents('.mb-mask').find('.one-cate .attrVal.on'),function(i, attrVal){
+					attrValArr.push($(attrVal).data('attrvalid'));
+				});
+				commodityList.requestDate("/fixed/item/getItems",{userId:USERID,categoryId:categoryid,sortType:stype,properyId:attrValArr.join(',')},function(data){
+					data.status == 200 && commodityList.dataInit.call(modityDom,data.data);
+					
+					modityDom.find(".loadMore").attr("categoryid",categoryid);
+				});
+				// 储存属性值id
+				modityDom.attr('data-attrvalarr',attrValArr.join(','))
+			} else {
+				// 没有选择属性值 清除节点属性值数据
+				modityDom.removeAttr('data-attrvalarr');
+				commodityList.requestDate("/fixed/item/getItems",{userId:USERID,categoryId:categoryid,sortType:stype,properyId:attrValArr.join(',')},function(data){
+					data.status == 200 && commodityList.dataInit.call(modityDom,data.data);
+					
+					modityDom.find(".loadMore").attr("categoryid",categoryid);
+				});
+			}
+			// 分类导航回显
+			commodityList.navEcho(that);
+			// 关闭高级搜索
+			commodityList.clearAdv();
+		});
+		// 点击重置按钮
+		$(document).on('click','.wqdcommodityAdvanceSearch .btn-box .reset', function () {
+			$(this).parents('.mb-mask').find('.one-cate .attrVal').removeClass('on')
+		});
+		// 点击返回全部分类
+		$(document).on('click','.wqdcommodityAdvanceSearch .one-cate .backAllCate', function () {
+			/* 全部分类 */
+			var contactId = $(this).parents('.wqdcommodityAdvanceSearch').attr("wqdmark") || "ssss",
+				USERID = $(".wqdcommodityList[wqdmark="+contactId+"]").attr("userid") || "",
+				categoryIds = $(".wqdcommodityList[wqdmark="+contactId+"]").attr("data-categoryIds") || "",
+				$curAdvObj = $("body .wqdcommodityAdvanceSearch").eq(0);
+			commodityList.requestDate("/fixed/item/getAllCategory",{userId:USERID},function (data) {
+				if(data.status == 200 ){
+					commodityList.advSearch('allcate',$curAdvObj,commodityList.getCatetoryDate(data.data, categoryIds));
+				}
+			})
+		});
+		// 退出筛选 auth:wpz
+		$(document).on('click','.mb-container-box .mb-mask',function (e) {
+			if($(e.target).hasClass('mb-popover') || $(e.target).parents('.mb-popover').length || $(e.target).parents('.btn-box').length ||$(e.target).hasClass('btn-box')){
+				 return
+			} else {
+				// 关闭高级搜索框
+				commodityList.clearAdv();
+			}
+		 });
+		
+	};
+
+	// 渲染高级搜索 wpz
+	// obj用来传递要传递的值
+	commodityList.advSearch = function (cateType, $obj,cateData, obj) {
+		// 全部分类
+		if(cateType == 'allcate') {
+			var html =  "<div class='cate-title'>全部分类</div>";
+			$.each(cateData,function(i, _val){
+				html += "<div class='cate-row'>";
+				html += "<div class='cate-name' data-cate='"+ _val.categoryId +"'>"+  _val.name +"</div><i class='li-switch ul-hide'><svg class='down' style='width:12px;height:12px;' viewBox='0 0 1026 1024'><path d='M1018.701913 255.75513c-8.704-8.704-22.77287-8.704-31.47687 0L516.563478 726.416696 45.924174 255.75513c-8.704-8.704-22.77287-8.704-31.47687 0s-8.704 22.77287 0 31.47687l486.4 486.4c4.34087 4.34087 10.039652 6.522435 15.738435 6.522435s11.397565-2.181565 15.738435-6.522435l486.4-486.4C1027.383652 278.550261 1027.383652 264.45913 1018.701913 255.75513z' p-id='7641'/></svg><svg class='up' viewBox='0 0 150.3 150' style='enable-background:new 0 0 150.3 150;width:12px;height:12px'><path d='M2.1,113.3c1.3,1.3,3.3,1.3,4.6,0l68.9-68.9l68.9,68.9c1.3,1.3,3.3,1.3,4.6,0c1.3-1.3,1.3-3.3,0-4.6L78,37.5  c-0.6-0.6-1.5-1-2.3-1s-1.7,0.3-2.3,1L2.1,108.7C0.8,110,0.8,112,2.1,113.3z'/></svg></i>";
+				html +=	"<ul class='secondCate' style='display:none'>";
+				if(_val.child){
+					$.each(_val.child,function (i, __val) {
+						html += "<li class='second' data-cate='"+ __val.categoryId +"'>"+ __val.name +"</li>";
+					})
+				} else {
+						html += "<li style='color:#999;'>没有分类</li>";
+				}
+				html +=	"</ul>";			
+				html +=	"</div>";			
+			})
+			$obj.find('.all-cate').html(html).show();
+			$obj.find('.one-cate,.btn-box').hide();
+		}
+		// 最后一级
+		if(cateType == 'isLast') {
+			// 展示属性筛选条件
+			if(cateData.itemProperty && cateData.itemProperty.length){
+				var html =  "<div class='cate-title' data-cateid='"+ obj.id +"'>"+ obj.name +"</div>";
+					html += "<div class='mb-item-box'>";
+					$.each(cateData.itemProperty, function (i, _val) {
+						html +="<div class='mb-item'>";
+						html +="<div class='mb-item-title'><p class='name'>"+ _val.name +"</p></div>";
+						html += "<div class='mb-item-content'>";
+						if(_val.values && _val.values.length){
+							$.each(_val.values, function(i, __val){
+								html += "<span class='attrVal' data-attrvalid='"+ __val.id +"'> <i><svg style='width:12px;height:10px' viewBox='0 0 1024 1024' fill='red'><defs><style type='text/css'/></defs><path d='M1011.801043 187.280696c-8.704-8.659478-22.79513-8.659478-31.47687 0.066783L375.206957 794.802087 54.650435 472.954435c-8.659478-8.704-22.77287-8.726261-31.47687-0.066783-8.726261 8.681739-8.748522 22.77287-0.066783 31.47687l336.339478 337.697391c4.185043 4.185043 9.839304 6.544696 15.760696 6.544696s11.597913-2.359652 15.760696-6.544696l620.877913-623.304348C1020.527304 210.053565 1020.505043 195.940174 1011.801043 187.280696z' p-id='11528'/></svg>&nbsp;</i>"
+								html += (__val.name? __val.name:'--') +"</span>";
+							})
+						} else {
+								html +="<span style='width:100%;background:#fff;color:#ccc'>没有属性值</span>";
+						}
+						html +=	"</div>";
+						html +="</div>";
+					})
+					html += "</div>";
+				} else {
+					var html =  "<div class='cate-title' data-cateid='"+ obj.id +"'>"+ obj.name +"</div>";
+					html += "<div class='mb-item-box' style='color:#666;position:absolute;width:100%;padding-bottom:10px;top:40%;font-size:16px;text-align:center;font-weight:bold;'>该分类下没有属性</div>";
+					html += "<div class='backAllCate' style='background: #f7f7f7;padding:0 10px;text-align: center;font-size:12px;line-height:2;position:absolute;top:40%;left:50%;margin-top: 50px;transform:translate(-50%);color:#666;'>返回全部分类</div>";
+				}
+			$obj.find('.one-cate').html(html).show();
+			$obj.find('.btn-box').fadeIn().css({bottom:'-40px'}).animate({bottom:'0'});
+			$obj.find('.all-cate').hide();
+			// 属性值回显
+			var contactId = $obj.attr('wqdmark'),
+				attrValArr = $(".wqdcommodityList[wqdmark="+contactId+"]").attr("data-attrvalarr") || '';
+			attrValArr && $.each(attrValArr.split(','), function(i, val){
+				$obj.find('span.attrVal[data-attrvalid='+ val +']').addClass('on')
+			})
+		}
+		// 不是最后一级
+		if(cateType == 'noLast'){
+			var html ="<div class='cate-title'>请选择二级分类</div>";
+				html +="<div class='cate-row' data-cate='"+ obj.firstCateID +"'><i class='li-switch ul-show'><svg class='down' style='width:12px;height:12px;' viewBox='0 0 1026 1024'><path d='M1018.701913 255.75513c-8.704-8.704-22.77287-8.704-31.47687 0L516.563478 726.416696 45.924174 255.75513c-8.704-8.704-22.77287-8.704-31.47687 0s-8.704 22.77287 0 31.47687l486.4 486.4c4.34087 4.34087 10.039652 6.522435 15.738435 6.522435s11.397565-2.181565 15.738435-6.522435l486.4-486.4C1027.383652 278.550261 1027.383652 264.45913 1018.701913 255.75513z' p-id='7641'/></svg><svg class='up' viewBox='0 0 150.3 150' style='enable-background:new 0 0 150.3 150;width:12px;height:12px'><path d='M2.1,113.3c1.3,1.3,3.3,1.3,4.6,0l68.9-68.9l68.9,68.9c1.3,1.3,3.3,1.3,4.6,0c1.3-1.3,1.3-3.3,0-4.6L78,37.5  c-0.6-0.6-1.5-1-2.3-1s-1.7,0.3-2.3,1L2.1,108.7C0.8,110,0.8,112,2.1,113.3z'/></svg></i>";
+				html +=	"<div class='cate-name'>"+ obj.name +"</div>";
+				html +=	"<ul class='secondCate'>";
+				$.each(obj.$secondLi, function(i, liA){
+					if(obj.firstCateID != parseInt($(liA).attr('data-category'))){
+						html +=	"<li class='second' data-cate="+ $(liA).attr('data-category') +">"+ $(liA).text() +"</li>";
+					}
+				})
+				html +=	"</ul>";
+				html +="</div>";
+
+			$obj.find('.all-cate').html(html).show();
+			$obj.find('.one-cate,.btn-box').hide();
+		}
+
+		// 展示高级搜索
+		$obj.fadeIn().find('.mb-popover').css({right:'-270px'}).animate({right:'0'});
+			//阻止页面滚动 
+		$('body').css({'overflow':'hidden','position':'fixed'});
+
+	};
+
+
+
+	commodityList.requestDate = function(url,data,callback) {
+		$.ajax({
+            type: "GET",
+            url: url,
+            data : data,
+            dataType: "json",
+            success:callback
+        });
+	};
+	commodityList.reloadData = function(element){
+		element.parents(".modityCategory").find(".modityMask").hide();
+
+		var contactId = element.parents(".wqdcommodityCategory").attr("wqdmark") || "ssss",
+			modityDom = $(".wqdcommodityList[wqdmark="+contactId+"]"),
+			stype = modityDom.attr("sorttype") || "time",
+			USERID = modityDom.attr("userid") || "",
+			categoryid = element.attr("data-category") || (modityDom.attr("data-categoryids") ? modityDom.attr("data-categoryids") : "");
+		commodityList.requestDate("/fixed/item/getItems",{userId:USERID,categoryId:categoryid,sortType:stype},function(data){
+			data.status == 200 && commodityList.dataInit.call(modityDom,data.data);
+
+			modityDom.find(".loadMore").attr("categoryid",categoryid);
+		});
+		element.parents(".wqdcommodityCategory").find(".modityCategory li").removeClass("active");
+		element.parent("li").addClass("active");
+		element.parents(".categoryThird").hide().parent("li").addClass("active");
+		element.parents(".categorySecond").hide().parent("li").addClass("active");
+	};
+	//加载更多
+	commodityList.loadmore = function(element,type){
+		var modityList = element.parents(".wqdcommodityList"),
+			dataStyle = modityList.attr("data-style") || "",
+			start = modityList.find(".list_row > li").length + 1,
+			column = parseInt(commodityList.getParam(dataStyle,type) || 5),
+			end = start + column,
+			USERID = modityList.attr("userid") || "",
+			stype = modityList.attr("sorttype") || "time",
+			categoryIds = element.attr("categoryid") || (modityList.attr("data-categoryids") ? modityList.attr("data-categoryids") : ""),
+			cateIdArr = modityList.attr("data-attrvalarr") || '';
+		element.addClass("loaded");
+		commodityList.requestDate("/fixed/item/getItems",{userId:USERID,categoryId:categoryIds,sortType:stype,fromNum:start,toNum:end,properyId:cateIdArr},function(data){
+			data.status == 200 && commodityList.dataInit.call(modityList,data.data,true);
+		});
+	};
+	//更新数据
+	commodityList.updataModity = function(){
+		$(".wqdcommodityCategory").each(function(){
+			var that = $(this),
+				addPageDfd = $.Deferred(),
+				contactId = $(this).attr("wqdmark") || "ssss",
+				USERID = $(".wqdcommodityList[wqdmark="+contactId+"]").attr("userid") || "",
+				categoryIds = $(".wqdcommodityList[wqdmark="+contactId+"]").attr("data-categoryIds") || "";
+			commodityList.requestDate("/fixed/item/getAllCategory",{userId:USERID},function(data){
+				//commodityList.categoryData = data.data;		//缓存数据
+				data.status == 200 && commodityList.categoryInit.call(that,commodityList.getCatetoryDate(data.data, categoryIds));
+				// 判断是否有高级搜索
+				commodityList.setAdv(that);
+				addPageDfd.resolve();
+			});
+			$.when(addPageDfd).done(function () {
+				var touchObj = new wqdTouchSlide($(".categoryFirst").eq(0),{
+					bindClick : false,
+					moveCallback : function(){
+						$(".categorySecond, .categoryThird, .modityMask").hide();
+					}
+				});
+				that.data("touchSlide",touchObj);
+			});
+		});
+		$(".wqdcommodityList").each(function(){
+			//记录一个原始的差值
+			var difHeight = $(this).parents(".sectionV2").height() - $(this).outerHeight();
+			$(this).data("difHeight",difHeight);
+
+			var that = $(this),
+				USERID = that.attr("userid") || "",
+				stype = $(this).attr("sorttype") || "time",
+				categoryIds = that.attr("data-categoryIds") || "";
+			commodityList.requestDate("/fixed/item/getItems",{userId:USERID,categoryId:categoryIds,sortType:stype},function(data){
+				data.status == 200 && commodityList.dataInit.call(that,data.data);
+			});
+		});
+	};
+	//渲染分类
+	commodityList.categoryInit = function(data){
+		var html = "";
+		if(data && data.length){
+			html += '<ul class="categoryFirst"><li class="active"><a class="categoryChild" href="javascript:void(0);">全部分类</a></li>';
+			for(var i=0; i<data.length; i++){
+				var haveChild = (data[i].child && data[i].child.length) ? 'class="haveChild"' : "";
+				html += '<li '+haveChild+'><a class="categoryChild" href="javascript:void(0);" data-category="'+data[i].categoryId+'">'+data[i].name+'</a>';
+				html += '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 26 14" enable-background="new 0 0 26 14" xml:space="preserve" class="categoryChild categoryIcon"><path fill-rule="evenodd" clip-rule="evenodd" fill="#333333" d="M25.4,0.9L25,0.5c-0.6-0.5-1.5-0.5-2.1,0L13,9.7L3.1,0.5C2.5,0,1.6,0,1,0.5L0.6,0.9C0,1.5,0,2.3,0.6,2.9l11.4,10.6c0.6,0.5,1.5,0.5,2.1,0l0.4-0.4c0,0,0,0,0,0L25.4,2.9C26,2.3,26,1.5,25.4,0.9z"></path></svg>';
+				if(data[i].child && data[i].child.length){
+					html += '<ul class="categorySecond"><li><a href="javascript:void(0);" data-category="'+data[i].categoryId+'">全部</a></li>';
+					for(var j=0; j<data[i].child.length; j++){
+						html += '<li><a href="javascript:void(0);" data-category="'+data[i].child[j].categoryId+'">'+data[i].child[j].name+'</a>';
+						if(data[i].child[j].child && data[i].child[j].child.length){
+							html += '<ol class="categoryThird"><li><a href="javascript:void(0);" data-category="'+data[i].child[j].categoryId+'">全部</a></li>';
+							for(var k=0; k<data[i].child[j].child.length; k++){
+								html += '<li><a href="javascript:void(0);" data-category="'+data[i].child[j].child[k].categoryId+'">'+data[i].child[j].child[k].name+'</a></li>';
+							}
+							html += '</ol>';
+						}
+						html += '</li>';
+					}
+					html += '</ul>';
+				}
+				html += '</li>';
+			}
+			html += '</ul>';
+		}
+		$(this).find(".modityCategory").html(html);
+		$(this).find(".modityCategory .categoryFirst > li").eq(0).addClass("active");
+		var allWidth = 0;
+		$(this).find(".modityCategory .categoryFirst > li").each(function(){
+			allWidth += $(this).outerWidth();
+		});
+		// 如果存在筛选按钮 将分类导航加宽40px防止阻挡最后一个分类 wpz
+		if($(this).hasClass('advance-search')){
+			allWidth += 40;
+		}
+		$(this).find(".modityCategory .categoryFirst").width(allWidth);
+	};
+	//渲染商品信息 bool为false时渲染数据，为true时追加数据
+	commodityList.dataInit = function(data,bool){
+		var pageId = $(this).attr("data-pageid") || "",
+			modityStr = bool ? '' : '<li><ol class="list_row">',
+			USERID = $(this).attr("userid") || "",
+			dataStyle = $(this).attr("data-style") || "",
+			column = parseInt(commodityList.getParam(dataStyle,"modity-count") || 1),
+			loadtype = $(this).find(".loadMore").attr("loadmore-type") || "0",
+			needMore = (loadtype == "2" || loadtype == "3");
+
+		if(bool){
+			if(loadtype == "2"){
+				column = parseInt(commodityList.getParam(dataStyle,"slide-count") || 5);
+			}else if(loadtype == "3"){
+				column = parseInt(commodityList.getParam(dataStyle,"click-count") || 5);
+			}
+		}
+
+		if(data && data.length){
+			for(var i=0; i<data.length && i<column; i++){
+				var _blank = data[i].widowsType=="news" ? ' target="_blank"' : "",
+					salesStr = String(data[i].salesVolume),
+					hrefUrl = pageId ? "pageItem_"+pageId+"_"+data[i].id+".html?catch="+USERID : "javascript:;";
+
+				//销量超过万显示多少万件
+				salesStr = salesStr.length > 4 ? salesStr.substring(0,salesStr.length-4)+"."+salesStr.substring(salesStr.length-4,salesStr.length-3)+"万" : salesStr;
+				hrefUrl =  data[i].detailsType=="external" ? data[i].itemLink : hrefUrl;
+				modityStr += '<li data-modity="'+data[i].id+'"><a'+_blank+' href="'+hrefUrl+'" class="commodityWrap">';
+				modityStr += '<div class="modityImg"><img src="'+CSSURLPATH+data[i].picPath.split(",")[0]+'"></div>';
+				modityStr += '<div class="textMessage"><p class="moditDescribe">'+data[i].name+'</p>';
+				modityStr += '<div class="modityMark clearfix"><div class="priceMark">';
+				modityStr += '<div class="nowPrice commomPrice">¥<span>'+data[i].currentPrice+'</span></div>';
+				modityStr += '<div class="originalPrice commomPrice">¥<span>'+data[i].originalPrice+'</span></div></div>';
+				modityStr += '<div class="countMark"><div class="admireMark"><svg class="admireSvg" viewBox="-250 -250 2392 2392" xmlns="http://www.w3.org/2000/svg"><path fill="#999" d="M1664 596q0-81-21.5-143t-55-98.5-81.5-59.5-94-31-98-8-112 25.5-110.5 64-86.5 72-60 61.5q-18 22-49 22t-49-22q-24-28-60-61.5t-86.5-72-110.5-64-112-25.5-98 8-94 31-81.5 59.5-55 98.5-21.5 143q0 168 187 355l581 560 580-559q188-188 188-356zm128 0q0 221-229 450l-623 600q-18 18-44 18t-44-18l-624-602q-10-8-27.5-26t-55.5-65.5-68-97.5-53.5-121-23.5-138q0-220 127-344t351-124q62 0 126.5 21.5t120 58 95.5 68.5 76 68q36-36 76-68t95.5-68.5 120-58 126.5-21.5q224 0 351 124t127 344z"></path></svg>';
+				modityStr += '<span>'+data[i].favorable+'</span></div><div class="salesMark">已售出<span>'+salesStr+'</span>件</div></div></div></div></a></li>';
+			}
+			!bool && (modityStr += '</ol></li>');
+			
+			needMore &&	(data.length < column ? $(this).find(".loadMore").hide() : $(this).find(".loadMore").show());
+			
+		}else{
+			!bool && (modityStr = '<p class="nomodityHint"><strong>暂无符合条件的商品信息！</strong></p>');
+			needMore &&	$(this).find(".loadMore").hide();
+		}
+		bool ? $(this).find(".commodityList .list_row").append(modityStr) : $(this).find(".commodityList").html(modityStr);
+
+		//删除加载状态class
+		needMore &&	$(this).find(".loadMore").removeClass("loaded");
+		//重新计算通栏的高度
+		var difHeight =  $(this).data("difHeight") || 0;
+		data && data.length && $(this).parents(".sectionV2").height($(this).outerHeight()+difHeight);
+	};
+	//提取参数
+	commodityList.getParam = function (objString,name) {
+		if(!objString || !name) return "";
+		var paramVal = "",
+			paramObj = {};
+        $.each(objString.split(";"),function (i,_) {
+            if(!_) return true;
+            var key = _.split(":");
+            paramObj[key[0]] = key[1];
+        });
+        paramVal = paramObj[name] || "";
+        return paramVal;
+    };
+    
+    //根据分类id提取相应的数据
+    commodityList.getCatetoryDate = function(dataArr,categoryIds){
+    	var newArr = [];
+    	if(categoryIds){
+			categoryIds = categoryIds.split(",");
+			// $.map(dataArr,function(_i){
+			// 	for(var k=0; k<categoryIds.length; k++){
+			// 		if(_i.categoryId==categoryIds[k]){
+			// 			newArr.push(_i);
+			// 			break;
+			// 		}
+			// 	}	
+			// });
+			/* 将分类定义顺序，传入新数组 */
+            for(var k=0; k<categoryIds.length; k++) {
+                $.map(dataArr, function (_i) {
+                    if(categoryIds[k] == _i.categoryId) {
+                        newArr.push(_i);
+                        // return false;
+                    }
+                });
+            }
+			return newArr;
+		}else{
+			return dataArr;
+		}
+    };
+    // 是否存在高级搜索 wpz
+	commodityList.setAdv = function (cateEle) {
+		if(cateEle.hasClass('advance-search')){
+			var contactId = cateEle.attr("wqdmark") || "ssss";
+			// 高级搜索高度
+			var advH = $(window).height();
+			// 筛选按钮高度
+			var filtBtnH = $(".wqdcommodityCategory[wqdmark="+contactId+"] .categoryFirst").height();
+			/*插入筛选按钮 应该先判断是否选择高级搜索 */
+			cateEle.find(".modityCategory").append([
+				'<div class="filtrate" style="position:absolute;top:1px;right:0;z-index:2;padding-right:10px;cursor:pointer;line-height:'+ filtBtnH +'px;height:'+filtBtnH+'px;background:#fff;">',
+					'<span style="color: #ff9900;font-size:14px;"">筛选</span>',
+				'</div>'
+			].join(''));
+			
+			if(($('body .wqdcommodityAdvanceSearch').length == 0)){
+				// 添加高级搜索style样式
+				$('head').eq(0).find('style:last').after('<style type="text/css" class="wqdcommodityAdvanceSearch"> .wqdcommodityAdvanceSearch { position: fixed; top: 0; height: 100%; width: 100%; display: none; z-index: 9999; } .wqdcommodityAdvanceSearch .mb-container-box { position: relative; font-size: 12px; height: 100%; width: 100%; color: #333; } .wqdcommodityAdvanceSearch .mb-container-box p { font-size: 14px; margin: 8px 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; } .wqdcommodityAdvanceSearch .mb-container-box .mb-mask { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.3); overflow: hidden; cursor: pointer;-webkit-tap-highlight-color: rgba(0,0,0,0);} .wqdcommodityAdvanceSearch .mb-container-box .mb-popover { position: absolute; right: 0; top: 0; width: 270px; height: 100%; background: #fff; box-sizing: border-box; overflow: scroll; } .wqdcommodityAdvanceSearch .mb-container-box .mb-item-box { padding: 0 10px; } .wqdcommodityAdvanceSearch .mb-container-box .backAllCate{ cursor: pointer; } .wqdcommodityAdvanceSearch .mb-container-box .cate-title { position: relative; width: 100%; padding-left: 10px; font-size: 14px; height: 40px; line-height: 40px; border-bottom: 1px solid #dcdcdc; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; } .wqdcommodityAdvanceSearch .mb-container-box .cate-title i { position: absolute; right: 20px; } .wqdcommodityAdvanceSearch .mb-container-box .mb-item-title { position: relative; } .wqdcommodityAdvanceSearch .mb-container-box .mb-item-title .more { position: absolute; right: 10px; top: 1px; color: #999; } .wqdcommodityAdvanceSearch .mb-container-box .mb-item-title .more i { margin-left: 5px; } .wqdcommodityAdvanceSearch .mb-container-box .mb-item-content span { display: inline-block; width: 75px; background: #f0f0f0; height: 26px; line-height: 26px; margin-right: 4px; margin-bottom: 8px; box-sizing: border-box; text-align: center; padding: 0 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer; } .wqdcommodityAdvanceSearch .mb-container-box .mb-item-content span:nth-child(3n) { margin-right: 0; } .wqdcommodityAdvanceSearch .mb-container-box .mb-item-content span.on { color: red; border: 1px solid red; background: #fff; } .wqdcommodityAdvanceSearch .mb-container-box .mb-item-content span.on>i { position: relative; display: inline-block; } .wqdcommodityAdvanceSearch .mb-container-box .mb-item-content span>i { display: none; } .wqdcommodityAdvanceSearch .mb-container-box .btn-box { display: none; position: absolute; right: 0; bottom: 0; background: #fff; width: 270px; height: 40px; line-height: 40px; font-size: 14px; border-top: 1px solid #dcdcdc; box-sizing: border-box; font-size: 0; } .wqdcommodityAdvanceSearch .mb-container-box .btn-box .btn { display: inline-block; width: 135px; text-align: center; box-sizing: border-box; font-size: 14px; cursor: pointer; } .wqdcommodityAdvanceSearch .mb-container-box .btn-box .btn.on { background: #e41436; color: #fff; border-top: 1px solid #e41436 } .wqdcommodityAdvanceSearch .mb-container-box .li-switch { position: absolute; right: 10px; top: 0; } .wqdcommodityAdvanceSearch .mb-container-box .all-cate { display: none; } .wqdcommodityAdvanceSearch .mb-container-box .all-cate, .wqdcommodityAdvanceSearch .mb-container-box .one-cate { margin-bottom: 40px; } .wqdcommodityAdvanceSearch .mb-container-box .cate-row { line-height: 40px; position: relative; } .wqdcommodityAdvanceSearch .mb-container-box .cate-row li { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; cursor: pointer; } .wqdcommodityAdvanceSearch .mb-container-box .cate-row a { color: #333; } .wqdcommodityAdvanceSearch .mb-container-box .cate-name { border-bottom: 1px solid #dcdcdc; padding-left: 10px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; cursor: pointer; } .wqdcommodityAdvanceSearch .mb-container-box .ul-hide .up { display: none } .wqdcommodityAdvanceSearch .mb-container-box .ul-show .down { display: none } .wqdcommodityAdvanceSearch .mb-container-box .cate-row ul, .wqdcommodityAdvanceSearch .mb-container-box .cate-row li { margin: 0; padding: 0; list-style: none; box-sizing: border-box; } .wqdcommodityAdvanceSearch .mb-container-box .cate-row li { border-bottom: 1px solid #dcdcdc; padding-left: 20px; background: #f0f0f0; } </style>')
+				// 添加高级搜索节点
+				$('body').eq(0).append('<div class="wqdcommodityAdvanceSearch" style="-webkit-tap-highlight-color: rgba(0,0,0,0);"> <div class="mb-container-box in"> <div class="mb-mask"> <div class="mb-popover"> <div class="all-cate"> </div> <div class="one-cate"> </div> </div> <div class="btn-box"> <div class="reset btn">重置</div> <div class="submit btn on">确定</div> </div> </div> </div> </div>')
+
+			}
+
+		}
+		
+	};
+	// 关闭筛选框 wpz
+	commodityList.clearAdv = function () {
+		$('body .wqdcommodityAdvanceSearch').fadeOut().find('.mb-popover').animate({right:'-270px'});
+		$('body .wqdcommodityAdvanceSearch').fadeOut().find('.btn-box').animate({bottom:'-40px'});
+		// 页面可以滚动
+		$('body').css({'overflow':'initial','position':'relative'})
+	};
+	// 点击筛选框内确定后 导航回显 wpz
+	commodityList.navEcho = function (that) {
+		var contactId = $(that).parents(".wqdcommodityAdvanceSearch").attr("wqdmark") || "ssss",
+			$modityCate = $(".wqdcommodityCategory[wqdmark="+contactId+"]"),
+			$advCateTit = $(that).parents('.mb-mask').find('.one-cate .cate-title');
+		// 回显导航
+		$modityCate.find('.modityCategory li.active').removeClass('active')
+		if($modityCate.find('.categoryFirst>li>a[data-category='+ $advCateTit.data('cateid') +']').length){
+			/* 选择是一级分类 */
+			$modityCate.find('.categoryFirst>li>a[data-category='+ $advCateTit.data('cateid') +']').parent().addClass('active');
+		} else {
+			/* 选择到二级分类 */
+			$modityCate.find('.categorySecond>li>a[data-category='+ $advCateTit.data('cateid') +']').parent().addClass('active');
+			$modityCate.find('.categorySecond>li>a[data-category='+ $advCateTit.data('cateid') +']').parents('li.haveChild').addClass('active')
+		}
+
+	};
+
+	commodityList.init();
+});	

@@ -1,0 +1,267 @@
+$(function() {
+	var modityDetail = {
+		init : function(){
+			//是否已赞
+			var modityId = $(".modityDetails").attr("data-moddetailid") || "!!!",
+				modityCookie = this.getCookie(modityId);
+			modityCookie && $(".modityDetails .admireMark").addClass("active");
+			
+			$(".modityDetails .indicator li").length < 2 && $(".modityDetails .indicator").hide();
+			
+			//轮播图
+			var newSlide = new wqdImgSlide($(".modityDetails .modBannerimg"),{
+				auto : false,
+				callback : function(ind){
+					$(".modityDetails .indicator li").eq(ind).addClass("active").siblings().removeClass("active");
+				}
+			});
+			
+			if(!$(".modityDetails .modBuybtn").hasClass("hideElement")){
+
+				var detailId = $(".modityDetails").attr("id") || "", addNode = $('<div id="'+detailId+'"></div>'),
+					shopBtn = $(".modityDetails .modBuybtn").clone();
+					$(".modityDetails .modBuybtn").remove();
+				$("body").append(addNode.html(shopBtn));
+			}
+
+			//是否可购买
+			var nowPrice = $(".modityDetails .nowPrice span").text(),
+				inventory = $(".modityDetails .modInventory span").text();
+
+			(!nowPrice || !inventory || /[^\d\.]/.test(nowPrice) || inventory == "0") && $(".modBuybtn a").addClass("disabled");
+			(!inventory || inventory == "0") && $(".modityDetails .modityControl input").val(0);
+
+			this.bindEvent();
+		},
+		bindEvent : function(){	
+			//选择规格
+			$(document).on("click",".modSizeItem li",modityDetail.selectSize);
+
+			//点赞
+			$(document).on("click",".modityDetails .admireMark",modityDetail.praise);
+
+			//弹出分享层
+			$(document).on("click",".modityDetails .shareIcon",function(){
+				//$(this).siblings(".shareMask").show().find(".shareBox").addClass("animaShow");
+				if(!$(".modity_shareMask").length){
+					var shareMask = $('<div class="modity_shareMask"><div class="shareBox animaShow"><p class="shareSource">分享到</p><ul class="shareIconList share-list share-default"><li class="btn-share" data-type="sqq"><div class="btn-mg"></div><p class="shareText">QQ好友</p></li><li class="btn-share" data-type="weixin"><div class="btn-mg"></div><p class="shareText">微信</p></li><li class="btn-share" data-type="tsina"><div class="btn-mg"></div><p class="shareText">新浪微博</p></li><li class="btn-share" data-type="qzone"><div class="btn-mg"></div><p class="shareText">QQ空间</p></li><li class="btn-share" data-type="tieba"><div class="btn-mg"></div><p class="shareText">百度贴吧</p></li></ul><p class="shareCancel">取消</p></div></div>');
+					$("body").append(shareMask);
+
+					//分享链接
+					var shareImg = $(".modBannerimg li").length > 1 ? $(".modBannerimg li img").eq(1).attr("src") : $(".modBannerimg li img").attr("src");
+					shareMask.find(".shareIconList").attr({
+						"data-url" : location.href,
+						"data-pic" : shareImg,
+						"data-summary" : "我发现了一款不错的商品，快点击查看吧~"
+					});
+				}	
+				$(".modity_shareMask").show().find(".shareBox").addClass("animaShow");
+
+			}).on("click",".modity_shareMask",function(e){
+				if($(e.target).closest(".shareSource").length || $(e.target).closest(".shareIconList").length) return;
+
+				$(this).find(".shareBox").removeClass("animaShow").parent().hide();
+			});
+
+			//加入购物车、购买
+			$(".modBuybtn a").on("click",function(){
+				var $t=$(this);
+				if($(this).hasClass("disabled")) return;
+
+				var modSize = [], modId = [], num = $(".modityDetails .modityControl input").val();
+
+				if(!$(".mobile-buyCar").hasClass("goods-pay") && !$(".mobile-buyCar").hasClass("goods-members")){
+					
+					$(document).trigger("wqdCodeLogin.phone",$t);
+					return;
+				}
+					
+				if(num == "0"){
+
+					$(".modityDetails .modDetlWarning").css("opacity","1").find(".warningText").text("购买数量不能为零！");
+					return;
+				}
+				
+				if($(".modSizeItem li.active").length != $(".modSizeList > li").length){
+
+					$(".modityDetails .modDetlWarning").css("opacity","1").find(".warningText").text("请选择商品规格！");
+					return;
+				}
+				
+				$(".modSizeItem li.active").each(function(){
+
+					modSize.push($(this).text());
+					modId.push($(this).attr("sizeid"));
+
+				});
+
+				var Item = {
+					id : $(".modityDetails").attr("data-moddetailid") || "",
+					name : $(".modDetlTitle h3").text(),
+					price : $(".modityDetails .nowPrice span").text(),
+					picPath : $(".modBannerimg li img").length > 1 ? $(".modBannerimg li img").eq(1).attr("src") : $(".modBannerimg li img").eq(0).attr("src"),
+					itemLink : location.href,
+					count : num,
+					specificationValue : modSize.join("_"),
+					specificationId:modId.join("_")
+				};
+				
+				//触发加入购物车事件
+				if($(this).hasClass("shoppingCartBtn")){
+
+					$(this).trigger("addShoppingCart",{cartItem:JSON.stringify(Item), method:"add"});
+				}else{
+					var parame = [],
+						modObj  = {
+							buySource : "1",
+							goodsId : Item.id,
+							specificationId : Item.specificationId,
+							count : String(num),
+							itemLink : location.href
+							//price : String(Item.price * num)
+						};
+					parame[0] = modObj;
+					location.href = "/wechat/customer/order/settlement/index.html?goodsInfo="+encodeURIComponent(JSON.stringify({goodsInfo:parame}));
+				}
+			});
+
+			//输入购买数量
+			$(".modityDetails .modityControl input").on("input",function(){
+
+				this.value = this.value.replace(/\D/g, '');
+
+			}).on("blur",function(){
+
+				var val = parseInt(this.value || 0),
+					inventory = parseInt($(".modityDetails .modInventory span").text() || 0);
+				val = val > inventory ? inventory : val;
+				this.value = val;
+
+			});
+			// + -
+			$(".modityDetails .modityControl .controlBtn").on("click",function(){
+
+				$(".modityDetails .modDetlWarning").css("opacity","0");
+
+				var val = parseInt($(this).siblings("input").val()),
+					inventory = parseInt($(".modityDetails .modInventory span").text() || 0);
+
+				if($(this).hasClass("reduce")) val = val < 1 ? 0 : --val;
+
+				else val = val >= inventory ? inventory : ++val;
+
+				$(this).siblings("input").val(val);
+			});
+
+			/* 查看属性详情 */
+			$(document).on('click', '.shop-attr-row.only', function () {
+				var htmlStr = $('.shop-mask-bg').html();
+				$('.shop-mask-bg').remove();
+				$('body').append('<div class="shop-mask-bg">'+htmlStr+'</div>');
+				$('.shop-mask-bg').on('click', '.close', function () {
+					$('.shop-mask-bg').hide();
+				});
+			});
+		},
+		//选择规格
+		selectSize : function(){
+			var that = $(this),
+				USERID = modityDetail.getQueryString(location.href,"catch") || "";
+			if(that.hasClass("active")) return;
+			//$(".modSizeItem li").removeClass("modStockout");
+
+			that.addClass("active").siblings().removeClass("active");
+
+			if($(".modSizeList > li").length == $(".modSizeItem li.active").length){
+
+				var idArr = [] , modId = that.parents(".modityDetails").attr("data-moddetailid") || "";
+				$(".modSizeItem li.active").each(function(){
+					idArr.push($(this).attr("sizeid"));
+				});
+				idArr = idArr.join("_") + "&";
+
+				$.ajax({
+		            type: "post",
+		            url: "/fixed/itemSpecPrice/"+modId,
+		            data : {userId:USERID, specValue:idArr},
+		            dataType: "json",
+		            success:function(data){
+		            	if(data.status == 200){
+
+		            		//data.data.stock==0 && that.addClass("modStockout");
+		            		if(data.data.price && !/[^\d\.]/.test(data.data.price) && data.data.stock!="" && data.data.stock!="0"){
+		            			$(".modBuybtn a").removeClass("disabled");
+		            		} else{
+		            			$(".modBuybtn a").addClass("disabled");
+		            		}
+
+		            		$(".modityDetails .nowPrice span").text(data.data.price);
+		            		$(".modityDetails .modInventory span").text(data.data.stock=="" ? "0" : data.data.stock);
+		            		$(".modityDetails .modityControl input").val(data.data.stock && data.data.stock!="0" ? 1 : 0);
+		            		$(".modityDetails .modDetlWarning").css("opacity","0");
+		            	}else{
+		            		alert(data.msg);
+		            	}
+		            }
+		        });
+			}
+		},
+		//点赞
+		praise : function(){
+			if($(this).hasClass("active")) return;
+
+			var that = $(this),
+				count = that.siblings("span").text() - 0,
+				modityId = that.parents(".modityDetails").attr("data-moddetailid") || "";
+
+			if(count >= 9999999){
+				that.addClass("active");
+	            modityDetail.setCookie(modityId,"admire");
+	            return;
+			}
+			$.ajax({
+	            type: "post",
+	            url: "/fixed/item/review",
+	            data : {modityId:modityId},
+	            dataType: "json",
+	            success:function(data){
+	            	if(data.status == 200){
+
+	            		that.addClass("active").find("span").text(that.find("span").text()-0+1);
+	            		modityDetail.setCookie(modityId,"admire");
+	            	}else{
+	            		alert(data.msg)
+	            	}
+	            }
+	        });
+		},
+    	setCookie : function(key, value, expireDays){
+	        var date=new Date();
+	        expireDays = expireDays || 7;
+	        date.setTime(date.getTime()+expireDays*24*3600*1000);
+	        document.cookie = key + "=" + escape(value)+";expires="+date.toGMTString()+";path=/";
+	    },
+    	getCookie : function(name){
+	        var strCookie=document.cookie,
+	            arrCookie=strCookie.split(";");
+	        for(var i=0;i<arrCookie.length;i++){
+	            var arr=arrCookie[i].split("=");
+	            arr[0] = arr[0].replace(/\s/,"");
+	            if(arr[0]==name) {
+	                return arr[1];
+	            }
+	        }
+	        return "";
+	    },
+	    //获取url地址参数
+		getQueryString : function(url, name) {
+		    url = String(url);
+		    url = url.substring(String(url).indexOf("?"));
+		    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+		    var r = url.substring(1).match(reg);
+		    if (r != null) return decodeURIComponent(r[2]); return null;
+		}
+	};
+
+	modityDetail.init();
+});	

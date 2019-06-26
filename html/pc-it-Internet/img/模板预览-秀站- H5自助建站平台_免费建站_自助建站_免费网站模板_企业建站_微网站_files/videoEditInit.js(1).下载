@@ -1,0 +1,6 @@
+(function($) {
+
+ $(".wqd-video").length && $(".wqd-video").each(function() { $(this).find(".videoEdit").remove(); });
+
+})(jQuery);
+

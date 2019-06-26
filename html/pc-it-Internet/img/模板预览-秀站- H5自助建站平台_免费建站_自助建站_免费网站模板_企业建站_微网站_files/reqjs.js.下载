@@ -1,0 +1,28 @@
+$(function(){
+	var d = {
+			'navTemplate'     : 'navTemplate',
+			'firstNav'        : 'wqdNavigate',
+			'colorBox'        : 'wqdColorbox',
+			'picture'         : 'wqdPicture',
+			'carouse'         : 'wqdcarousel',
+			'share'           : 'wqdattentionlink',
+			'follow'          : 'wqdattentionlink',
+			'form'            : 'wqdForm',
+			'map'             : 'wqdMapInit',
+			'video'           : 'videoEditInit',
+			'groupContainer'  : 'wqdContainer',
+			'fixedContainer'  : 'fixedContainer',
+			'articleList'     : 'wqdArticleList',
+			'commodityList'	  : 'commodityList',
+			'modityDetails'	  : 'commodityDetail',
+			'wqdBgFixed'      : 'wqdBgFixed',
+			'memberLogin'     : 'wqdWechatlogin'
+	},
+	r;
+	
+	require.config({ paths: d });
+	r = ['navTemplate','wqdNavigate','wqdColorbox','wqdPicture','wqdcarousel','wqdattentionlink','wqdForm','wqdMapInit','videoEditInit','wqdContainer','fixedContainer','wqdArticleList','wqdBgFixed','commodityList','modityDetails','commoditySearchResult'];
+	r = r.concat(['memberLogin']);
+	require(r, function(){});
+})
+

@@ -1,0 +1,108 @@
+/*
+    creat       :   daimingru
+    date        :   2016-10-14
+    function    :   wechatlogin
+    loginClass  :   member-login
+*/
+(function ($) {
+    var time,loginopendata={},
+         loginhref="/customer/login.html",
+         registerhref="/customer/register.html",
+         wxhref="/customer/weChatLogin.html",
+         onlywxhref;
+    var isOpenEmailLogin,isOpenPhoneLogin,isOpenWechatLogin;
+    localStorage.setItem("loginrefer",document.location.href);
+    var isWeiXin=function (){
+        var ua = window.navigator.userAgent.toLowerCase();
+        return ua.match(/MicroMessenger/i) == 'micromessenger'?true:false;
+    }
+    var wxlink=function (){
+        $.ajax({
+            url:'/customer/wxlogin/getLoginQrcodeUrl',
+            type:'get',
+            data:{},
+            async:false,
+            datatype:"json",
+            success:function(data){
+                if(data.status == 200){
+                     window.location = data.data;
+                }
+            },
+            err:function(err){
+                console.log(err);
+            }
+        });
+    }
+    $(document).on("wqdCodeLogin.phone",function(e,node){
+        var $node=$(node),def=$.Deferred(),deg=$.Deferred(),isauthorized;
+        $.ajax({
+            url:'/customer/is/authorized',
+            type:'get',
+            data:{},
+            // async:false,
+            datatype:"json",
+            success:function(data){
+                if(data.status == 200){
+                    isauthorized=data.data?true:false;
+                    def.resolve();
+                }
+            },
+            err:function(err){
+                console.log(err);
+            }
+        });
+        $.ajax({
+            url:"/customer/loginWay",
+            type:"post",
+            // async:false,
+            success:function(data){
+                if(data.status==200){
+                    isOpenEmailLogin=data.data.isOpenEmailLogin;
+                    isOpenPhoneLogin=data.data.isOpenPhoneLogin;
+                    isOpenWechatLogin=data.data.isOpenWechatLogin;
+                    deg.resolve();
+                    
+                }
+            }
+        });
+        $.when(def,deg)
+        .done(function(){
+            if(!isOpenEmailLogin&&!isOpenPhoneLogin&&!isOpenWechatLogin) return;
+            //会员登陆和会员注册按钮
+            if(isOpenEmailLogin||isOpenPhoneLogin){
+                if($node.hasClass('member-login')||$node.closest('.modBuybtn').length){
+                    sessionStorage.setItem("detail",location.href);//跳转前添加session
+                    window.location.href=loginhref;
+                }else if($node.hasClass('member-regist')){
+                    window.location.href=registerhref;
+                }
+            }else{
+
+                if(isOpenWechatLogin&&isWeiXin()){
+                    if($node.hasClass('member-login')||$node.hasClass('member-regist')||$node.closest('.modBuybtn').length){
+                        wxlink();
+                    }
+                }else{
+                    if($node.hasClass('member-login')||$node.hasClass('member-regist')||$node.closest('.modBuybtn').length){
+                        window.location.href=wxhref;
+                    }
+                }
+            }
+
+            //第三方按钮
+            if(isOpenWechatLogin&&isauthorized){
+                if($node.attr("data-elementtype")=="memberLoginWX"||$node.hasClass('member-loginWX')){
+                    if(isWeiXin()){
+                        wxlink();
+                    }else{
+                        window.location.href=wxhref;
+                    }
+                }
+            }
+        });
+    });
+    $(document).on("click",".member-login,.member-regist,[data-elementtype=memberLoginWX],.member-loginWX",function(e){
+        $(document).trigger("wqdCodeLogin.phone",$(this));
+    })
+})(jQuery);
+

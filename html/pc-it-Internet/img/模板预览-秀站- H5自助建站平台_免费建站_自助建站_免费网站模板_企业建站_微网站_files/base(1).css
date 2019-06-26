@@ -1,0 +1,150 @@
+﻿@charset "utf-8";
+*{-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;}
+:after, :before {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;}
+body,h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,pre,form,fieldset,legend,button,input,textarea,th,td{margin:0;padding:0;word-break:normal;}
+address,cite,dfn,em,var{font-style:normal;}
+code,kbd,pre,samp{font-family:courier new,courier,monospace;}
+h1,h2,h3,h4,h5,h6,p,a,span{text-transform:none !important;word-wrap:break-word;word-break: break-all;}
+small{font-size:12px;}
+ul,ol{list-style:none outside none;}
+sup{vertical-align:text-top;}
+sub{vertical-align:text-bottom;}
+legend{color:#000000;}fieldset,img{border:0 none;}
+button,input,select,textarea{font-size:100%;}
+table{border-collapse:collapse;border-spacing:0;}
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary,time,mark,audio,video{display:block;margin:0;padding:0;}
+mark{background:none repeat scroll 0 0 #FFFF00;}
+body{font-family: "微软雅黑",Verdana,Arial,Helvetica,sans-serif;}
+img{border:medium none;vertical-align: middle;}
+body a{text-decoration:none;}
+a:active{color:inherit;}
+.clearfix:after {content: "."; display: block; height: 0; clear: both; visibility: hidden;}
+.clearfix:before {content: "."; display: block; height: 0; clear: both; visibility: hidden;}
+a:link, a:visited, a:hover, a:active, a:focus{outline: none;text-decoration:none;}
+h1 em, h2 em, h3 em, h4 em, h5 em, h6 em, p em{font-style: italic;}
+s,b{font-weight: normal;text-decoration: none;}
+input:focus,
+input:active,
+button:active,
+button:visited,
+button{outline: none;}
+::-ms-clear, ::-ms-reveal{display: none;}
+#HTMLDATA{
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+}
+.wqdAreaView[pagemodel=wqdBgFixed]{ position:relative; z-index:3;}
+/*手机点击轮播图偶尔出滚动条*/
+#wqdIphonePage{overflow:hidden;}
+/*强制改变以前的主区域宽度*/
+.wqdAreaView .wqdSectiondiv, .wqdAreaView .wqdBkEditos{min-width:320px !important;width: 320px !important;}
+/*通条隐藏 刘明仁*/
+.wqdSectiondiv section,.wqd-carouseOverlay{
+	overflow: hidden;
+}
+.wqdSectiondiv section.overShow {
+	overflow: visible;
+}
+/*元素组*/
+#HTMLDATA .onDraging .wqdGroup:before,
+#HTMLDATA .onGrouping:before,
+.wqd-carouseOverlay .onGrouping:before{width: 100%;height: 100%;content:'';position: absolute;top:0px;left:0px;border:1px solid #60c1ff!important;}
+.wqdGroup{ position: absolute; }
+#HTMLDATA .wqdGroupmove:before,
+.wqd-carouseOverlay .wqdGroupmove:before{width: 100%;height: 100%;content:'';position: absolute;top:0px;left:0px;border:1px solid #60c1ff!important;}
+/* 内容区域宽度 */
+.wqdAppFromos .radio,.wqdAppFromos .checkbox{display:inline-block; padding-right:25px;}
+textarea.form-control{ min-height:200px;}
+.wqdfromemptyos{ background:none!important; border:0!important;box-shadow:none!important;-webkit-box-shadow:none!important;-ms-box-shadow:none!important;-moz-box-shadow:none!important;}
+.wqdfromemptyos:hover{ border:0!important;}
+@media (max-width: 991px){
+	.wqdfromemptyos{ display:none;}
+}
+#HTMLDATA{
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+}
+/* 文字适配标准 liumingren*/
+html{font-size:62.5%; }
+body{font-size:14px; font-size:1.4rem; }
+.wqd-text-title1 {font-size: 32px !important;font-size:3.2rem !important;line-height: 1.75;font-weight: 400;}
+.wqd-text-title2 {font-size: 30px !important;font-size:3rem !important;line-height: 1.75;font-weight: 400;}
+.wqd-text-title3 {font-size: 24px !important;font-size:2.4rem !important;line-height: 1.75;font-weight: 400;}
+.wqd-text-title4 {font-size: 18px !important;font-size:1.8rem !important;line-height: 1.75;font-weight: 400;}
+.wqd-text-article1 {font-size: 16px !important;font-size:1.6rem !important;line-height: 1.75;font-weight: 400;}
+.wqd-text-article2 {font-size: 14px !important;font-size:1.4rem !important;line-height: 1.75;font-weight: 400;}
+.wqd-text-article3 {font-size: 14px !important;font-size:1.4rem !important;line-height: 1.75;font-weight: 400;}
+.wqd-text-article4 {font-size: 12px !important;font-size:1.2rem !important;line-height: 1.75;font-weight: 400;}
+/*元素liumingren*/
+.wqdelementEdit{
+	position:absolute;
+	-webkit-tap-highlight-color:transparent;
+	/*-webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;*/
+}
+.wqdelementEdit .wqdelementEditBox,.wqdelementEdit .wqdelementContent {width: 100%;height: 100%;overflow: hidden;position: absolute;z-index: 1;}
+.wqd-form.wqdControlForm [data-elementtype=formSelect]>.wqdelementEditBox,.wqd-form.wqdControlForm [data-elementtype=formDate]>.wqdelementEditBox{overflow:visible;}
+.wqdelementEdit[data-elementtype=svg] .wqdelementEditBox {
+	text-align: center;
+}
+.wqdelementEdit svg {height: 100%;width: 100%;}
+.wqdelementEdit[data-elementtype="text"] em {font-style: italic;}
+.wqd-img ,.wqd-img img{width: 100%;}
+.wqdelementEdit .wqdImgLinkV2 {
+	position: absolute;
+	top:0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 2;
+}
+.wqd-button ,a.wqd-button:visited,a.wqd-button:hover,a.wqd-button:focus{width: 100%;color: #fff;text-decoration: none;text-align:center;display:block;height: 100%;}
+.wqd-button > em {
+    position: relative;
+    top: 50%;
+    display: block;
+    -webkit-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	-o-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+.wqd-icon {display: block;}
+.wqd-icon .fa {display: block !important;}
+/*.wqdGroup {overflow: hidden;}*/
+/*隐藏模版标签*/
+.FREEMARKER_TEMPLATE_DATA_WQD_END {display:none !important;}
+.FREEMARKER_TEMPLATE_CATEGORY_WQD_END {display:none !important;}
+/*通条背景蒙版设置：刘军伟*/
+.wqdSectiondiv{position:relative;}
+.sectionV2{z-index:5;}
+/*元素遮罩*/
+.img-layer1:before {position:absolute;content:"";top:5px;left:5px;bottom:5px;right:5px;border:1px solid #fff;pointer-events: none;}
+.img-layer2:before {position:absolute;content:"";top:0px;left:0px;bottom:0px;right:0px;border:5px solid #fff;pointer-events: none;}
+.img-layer3:before {position:absolute;content:"";top:0px;left:0px;bottom:0px;right:0px;border:1px solid #fff;pointer-events: none;}
+/*线条*/
+
+.wqdelementEdit[data-elementtype=line] .wqdelementEditBox{position:relative;}
+
+.wqdelementEdit[data-elementtype=line]:not(.column),.wqdelementEdit.newLine[data-elementtype=line]:not(.column) {
+	height: auto !important;
+}
+
+.wqdelementEdit.newLine.column[data-elementtype=line] {
+	width: auto !important;
+}
+
+
+/*圆形图形会有切边*/
+.wqdelementEdit[data-elementtype=svg]>.wqdelementEditBox{
+	overflow:visible !important;
+}
+
+
+
