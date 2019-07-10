@@ -132,3 +132,15 @@
     width: 100%;
     height: 100%;
 }
+
+/*底部开始*/
+.bottom{
+
+    width: 100%;
+    height: 100px;
+    background: #383838;
+    color: #ffffff; 
+    margin-top: 200px;
+    text-align: center;
+    line-height: 100px;
+}
