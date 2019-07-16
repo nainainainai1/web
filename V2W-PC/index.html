@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>V2W-PC-商务服务</title>
+	<link rel="stylesheet" href="css/mycss.css">
+</head>
+<body>
+	<div class="top">
+		<img style="width: 185px;height: 49px;vertical-align: middle;" src="img/t1.png" alt="">
+		<a style="margin-left: 350px;" href="#" title="">首页</a></li>
+		<a href="#" title="">关于我们</a>
+		<a href="#" title="">产品展示</a>
+		<a href="#" title="">公司新闻</a>
+		<a href="#" title="">联系我们</a>
+		<img src="img/qq.png" alt="">
+		<img src="img/weixin.png" alt="">
+		<img src="img/weibo.png" alt="">
+	</div>
+	<div class="pic" id="pic">
+		<div class="screen" id="screen">
+			<ul id="ul">
+				<li><img src="img/20417139.jpg" alt=""></li>
+				<li><img src="img/20417140.jpg"" alt=""></li>
+				<li><img src="img/20417142.jpg"" alt=""></li>
+				<li><img src="img/20417144.jpg"" alt=""></li>
+			</ul>
+			<ol>
+				
+			</ol>
+			<div id="arr">
+				<span id="left"></span>
+				<span id="right"></span>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	window.onload = function (){
+	//1.获取事件
+	var pic = document.getElementById("pic");
+	var screen = pic.firstElementChild || pic.firstChild;
+	var imgWidth = screen.offsetWidth;
+	var ul = screen.firstElementChild || screen.firstChild;
+	var ol = screen.children[1];
+	var div =screen.firstElementChild || screen.firstChild;
+	var spanArr = div.children;
+	//2.第一张li添加到ul的最后面
+	var ulNewLi = ul.children[0].cloneNode(true);
+	ul.appendChild(ulNewLi);
+	//3.给ol中添加li，ul中的个数减1，并点亮第一个按钮
+	for(var i=0; i < ul.children.length - 1; i++){
+		var olNewLi = document.creatElement("li");
+		olNewLi.innerHTML = i+1;
+		ol.appendChild(olNewLi)
+	}
+	var olLiArr = ol.children;
+	olLiArr[0].className = "current";
+
+	//4.鼠标放到ol的li上切图
+	for (var i = 0;i< olLiArr.length; i++) {
+		//自定义属性，把索引值绑定到元素的index的属性上
+		olLiArr[i].index =i;
+		olLiArr[i].onmouseover = function(){
+			//排他思想
+			for (var j = 0; j< olLiArr.length; i++) {
+				olLiArr[j].className = "";
+			}
+			this.className = "current";
+			//鼠标放到小的方块上的时候索引值和key以及square同步
+			key = this.index;
+			square = this.index;
+			key = square = this.index;
+			//移动盒子
+			animate(ul,-this.index * imgWidth);
+		}
+		//5.添加定时器
+		var timer = setInterval(autoPlay,1000);
+		//固定向右切换图片
+		//两个定时器
+		var key =0;
+		var square =0;
+		function autoPlay(){
+			//通过控制key的自增来模拟图片的索引值，然后移动li
+			key++;
+			if(key > olLiArr.length){
+				//图片已滑动到最后一张，接下来，跳转到第一张，然后在滑动第二张
+				ul.style.left = 0;
+				key = 1;
+			}
+			animate(ul,-key * imgWidth);
+			square++;
+			if (square > olLiArr.length; i++) {
+				square =0;
+			}
+			for(var i = 0; i < olLiArr.length; i++){
+				olLiArr[i].className = "";
+			}
+			olLiArr[square].className = "current";
+		}
+		//把鼠标放上去清楚定时器，然后在开启定时器
+		pic.onmouseover = function(){
+			div.style.display = "block";
+			clearInterval(timer);
+		}
+		//6.左右切换图片
+		spanArr[0].onclick = function(){
+			key--;
+			if (key < 0) {
+				ul.style.left = -imgWidth *(olLiArr.length) + "px";
+				key = ol.length -1;
+			}
+			animate(ul,-key * imgWidth);
+			square--;
+			if (square < 0) {
+				square = olLiArr.length -1;
+			}
+			for (var i = 0; i < olLiArr.length; i++) {
+				olLiArr[i].className = "";
+			}
+			olLiArr[square].className = "current";
+		}
+		spanArr[1].onclick =function(){
+			autoPlay();
+		}
+		function animate(ele,target){
+			clearInterval(ele.timer);
+			var speed = target > ele.offsetLeft ? 10 : -10;
+			ele.style.left =ele.offsetLeft + speed + "px";
+			if(Math.abs(val) < Math.abs(speed)){
+				ele.style.left = target + "px";
+				clearInterval(ele.timer);
+			}
+
+		},10
+	}
+}
+</script>
+</html>
