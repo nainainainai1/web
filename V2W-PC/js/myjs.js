@@ -1,6 +1,6 @@
 window.onload = function (){
 	//1.获取事件
-	var pic = document.getElementById("pic");
+	var all = document.getElementById("all");
 	var screen = pic.firstElementChild || pic.firstChild;
 	var imgWidth = screen.offsetWidth;
 	var ul = screen.firstElementChild || screen.firstChild;
@@ -61,7 +61,7 @@ window.onload = function (){
 			olLiArr[square].className = "current";
 		}
 		//把鼠标放上去清楚定时器，然后在开启定时器
-		pic.onmouseover = function(){
+		all.onmouseover = function(){
 			div.style.display = "block";
 			clearInterval(timer);
 		}
